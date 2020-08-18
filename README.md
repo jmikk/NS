@@ -20,19 +20,19 @@ then Run Sheet Maker.py
  Last but not least open up the HTML document and enjoy buying/selling the cards
  
  
- 
+ *************************************************************************************************************************************************************************************
  
  
 Key code short cuts.user.js 
 Read the top comments in the code itself
 put the code into tampermonkey
-
+*************************************************************************************************************************************************************************************
 
 No Region Move.js
 This is simple just put your nations name in the code and it prevents you from moving the nation
-
+*************************************************************************************************************************************************************************************
 The Bodge Job.js
 The safer version of Breeze++ with almost all the same tools (even a bit faster) and open soruced! 
 This includes the No Region Move code.
 For how to work copy and paste the code into tamper monkey and then fill in your info on top
-
+*************************************************************************************************************************************************************************************
