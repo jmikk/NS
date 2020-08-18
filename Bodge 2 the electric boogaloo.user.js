@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         Bodge 2 the electric boogaloo
+// @name         The Bodge job 2
 // @version      0.2.1
 // @description  Breeze but safer I guess and opened up
 // @author       9003
