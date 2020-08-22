@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Names Are Hard to come up with so I guess its a potato.user.js
 // @namespace    http://tampermonkey.net/
-// @version      0.1.1
+// @version      0.1.3
 // @description  try to take over the world! With Lots and Lots of nukes! Hot Keys for Nday
 // @author       9003
 // @include        https://www.nationstates.net/nation=*/page=nukes*
@@ -16,9 +16,14 @@
 
 
 /*
-*
-*
+* [p]roduction page is pulled up
+* [i]ncoming nukes page for the faction
+* [f]action NEEDS UPDATING WHEN THE FACTION # COMES OUT AT CREATION ********************************************
+* [l]eaderboard, pulls up the faction leaderboard.  
+* [j] Self incoming page
 */
+//replace with the faction ID when it comes out
+var facID="17";
 (function() {
     'use strict';
 
@@ -34,11 +39,13 @@
      Mousetrap.bind(['p'],  function(ev){window.location.replace("https://www.nationstates.net/page=nukes/view=production");});
      //click make nuke
      //click make shield
-     //pulls up own incomming page
-     Mousetrap.bind(['i'],  function(ev){window.location.replace("https://www.nationstates.net/page=nukes/view=incoming");});
+     //pulls up incomming page for the faction
+     Mousetrap.bind(['i'],  function(ev){window.location.replace("https://www.nationstates.net/page=faction/fid="+facID+"/view=incoming");});
      //pulls up potato faction
 //******************************************************************************************************************************************************************************
-    // Mousetrap.bind(['f'],  function(ev){window.location.replace("https://www.nationstates.net/page=faction/fid=17");});
+     Mousetrap.bind(['f'],  function(ev){window.location.replace("https://www.nationstates.net/page=faction/fid="+facID);});
+    //Self incoming page
+     Mousetrap.bind(['j'],  function(ev){window.location.replace("https://www.nationstates.net/page=nukes/view=incoming");});
 //*******************************************************************************************************************************************************************************
       //pulls up faction leaderboard
       Mousetrap.bind(['l'],  function(ev){window.location.replace("https://www.nationstates.net/page=factions");});
