@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      0.1.1
+// @version      0.1.2
 // @namespace    dithpri.RCES
 // @description  mousetrap keybinds for card page
 // @author       dithpri Moded by 9003
@@ -15,7 +15,7 @@
 // @require      https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js?a4098
 // @grant        window.close
 // ==/UserScript==
-
+// IT WORKED!
 /*
  * Keybinds:
  * [s]ell, [a]sk
