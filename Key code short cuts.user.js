@@ -103,7 +103,7 @@
     Mousetrap.bind(['r'],  function(ev){location.reload();});
      Mousetrap.bind(['f'],  function(ev){document.getElementsByClassName("back")[0].click();document.getElementsByClassName("back")[1].click();document.getElementsByClassName("back")[2].click();document.getElementsByClassName("back")[3].click();document.getElementsByClassName("back")[4].click(); });
      Mousetrap.bind(['i'], function(ev) {window.open("https://www.nationstates.net/page=dilemmas")});
-    Mousetrap.bind(['j'],  function(ev){let elem = document.querySelector('a.deckcard-junk-button[data-rarity="uncommon"], a.deckcard-junk-button[data-rarity="rare"], a.deckcard-junk-button[data-rarity="ultra-rare"]');
+    Mousetrap.bind(['j'],  function(ev){let elem = document.querySelector('a.deckcard-junk-button[data-rarity="common"],a.deckcard-junk-button[data-rarity="uncommon"], a.deckcard-junk-button[data-rarity="rare"], a.deckcard-junk-button[data-rarity="ultra-rare"]');
    if (elem) {
     elem.click();
     elem.classList.remove('deckcard-junk-button');
