@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      0.1.2
+// @version      0.1.3
 // @namespace    dithpri.RCES
 // @description  mousetrap keybinds for card page
 // @author       dithpri Moded by 9003
@@ -23,12 +23,13 @@
  * [g]ift
  * [m]atch
  * [o]pen
- * [r]ight now it'll close if you press 'r'
+ * [w] will close close the tab
  * [t]o Deck page
  * [e]veryone hates useing 'e' to refresh a page rather then r
  * [f]lip 9003 off becuse you are so thankful for his code, and I guess it flips the cards
  * [j]unks all cards listed below the default is to junk Uncommons, Rares, Ultra rares.  You still need to press enter or space for the pop up
  * [i]ssues in a new tab
+ * [r] reloads the page
  */
 
 (function() {
