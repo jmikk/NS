@@ -27,7 +27,7 @@
  * [t]o Deck page
  * [e]veryone hates useing 'e' to refresh a page rather then r
  * [f]lip 9003 off becuse you are so thankful for his code, and I guess it flips the cards
- * [j]unks all cards listed below the default is to junk Uncommons, Rares, Ultra rares.  You still need to press enter or space for the pop up
+ * [j]unks all cards listed below the default is to junk Commons, Uncommons, Rares, Ultra rares.  You still need to press enter or space for the pop up
  * [i]ssues in a new tab
  * [r] reloads the page
  */
