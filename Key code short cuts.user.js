@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      0.1.3
+// @version      0.1.4
 // @namespace    dithpri.RCES
 // @description  mousetrap keybinds for card page
 // @author       dithpri Moded by 9003
