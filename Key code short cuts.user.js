@@ -4,7 +4,7 @@
 // @description  mousetrap keybinds for card page
 // @author       dithpri Moded far beyound what it once was by 9003
 // @noframes
-// @updateURL    https://github.com/jmikk/NS/raw/master/Key%20code%20short%20cuts.user.js 
+// @updateURL    https://github.com/jmikk/NS/raw/master/Key%20code%20short%20cuts
 // @match        https://www.nationstates.net/*page=deck*card=*
 // @match        https://www.nationstates.net/page=deck
 // @match        https://www.nationstates.net/*card=*page=deck*
