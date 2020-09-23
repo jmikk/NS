@@ -1,9 +1,8 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      0.1.4
-// @namespace    dithpri.RCES
+// @version      0.2
 // @description  mousetrap keybinds for card page
-// @author       dithpri Moded by 9003
+// @author       dithpri Moded far beyound what it once was by 9003
 // @noframes
 // @updateURL    https://github.com/jmikk/NS/raw/master/Key%20code%20short%20cuts.user.js 
 // @match        https://www.nationstates.net/*page=deck*card=*
@@ -24,9 +23,11 @@
  * [m]atch
  * [o]pen
  * [w] will close close the tab
+ * [k] to also close the tab (good for one handed farming)
  * [t]o Deck page
  * [e]veryone hates useing 'e' to refresh a page rather then r
  * [f]lip 9003 off becuse you are so thankful for his code, and I guess it flips the cards
+ * [enter] also will flip cards now 
  * [j]unks all cards listed below the default is to junk Commons, Uncommons, Rares, Ultra rares.  You still need to press enter or space for the pop up
  * [i]ssues in a new tab
  * [r] reloads the page
@@ -63,7 +64,7 @@
     });}
 
     // buy, bid
-    Mousetrap.bind(['b', 'B', 'k'], function(ev) {
+    Mousetrap.bind(['b', 'B'], function(ev) {
         noinput_mousetrap(ev);
         document.querySelector("th[data-mode=\"buy\"").click();
         const bidbox = document.querySelector("input.auctionbid[name=\"auction_bid\"]");
@@ -98,10 +99,10 @@
     });
 
      Mousetrap.bind(['o'],  function(ev){document.getElementsByClassName("button lootboxbutton")[0].click();});
-     Mousetrap.bind(['w'],  function(ev){if(!window.location.href.endsWith("/auto")) window.close();});
+     Mousetrap.bind(['w','k'],  function(ev){if(!window.location.href.endsWith("/auto")) window.close();});
     Mousetrap.bind(['t'],   function(ev){window.location.replace("https://www.nationstates.net/page=deck");});
     Mousetrap.bind(['r'],  function(ev){location.reload();});
-     Mousetrap.bind(['f'],  function(ev){document.getElementsByClassName("back")[0].click();document.getElementsByClassName("back")[1].click();document.getElementsByClassName("back")[2].click();document.getElementsByClassName("back")[3].click();document.getElementsByClassName("back")[4].click(); });
+     Mousetrap.bind(['f','enter'],  function(ev){document.getElementsByClassName("back")[0].click();document.getElementsByClassName("back")[1].click();document.getElementsByClassName("back")[2].click();document.getElementsByClassName("back")[3].click();document.getElementsByClassName("back")[4].click(); });
      Mousetrap.bind(['i'], function(ev) {window.open("https://www.nationstates.net/page=dilemmas")});
     Mousetrap.bind(['j'],  function(ev){let elem = document.querySelector('a.deckcard-junk-button[data-rarity="common"],a.deckcard-junk-button[data-rarity="uncommon"], a.deckcard-junk-button[data-rarity="rare"], a.deckcard-junk-button[data-rarity="ultra-rare"]');
    if (elem) {
