@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      0.4
+// @version      0.5.1
 // @description  mousetrap keybinds for card page
 // @author       dithpri Moded far beyound what it once was by 9003
 // @noframes
@@ -111,6 +111,31 @@
          document.querySelector("input#new_price_value[name=\"new_price\"]").stepUp();
          document.getElementById("change_price_button").click();
      });
+
+    Mousetrap.bind(['enter'],  function(ev){
+        if(document.getElementsByClassName("info").length > 0){
+            window.close();
+            }
+        if(window.location.href.endsWith("/pull_event_card"))
+        {
+        var i;
+         var stuff;
+         stuff=document.getElementsByClassName("cardprice");//[0].click();
+         for (i = 0; i < stuff.length; i++)
+         {
+         stuff[i].click();
+         }
+            var butt =  document.getElementById("change_price_button");
+       // butt.addAttribute("href", butt.getAttribute("href") +"/close");
+         document.querySelector("input#new_price_value[name=\"new_price\"]").stepUp();
+            butt.click();
+
+
+
+        }
+    });
+
+
 
      Mousetrap.bind(['o'],  function(ev){document.getElementsByClassName("button lootboxbutton")[0].click();});
      Mousetrap.bind(['w','k'],  function(ev){if(!window.location.href.endsWith("/auto")) window.close();});
