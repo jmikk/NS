@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      0.6.1
+// @version      0.6.2
 // @description  mousetrap keybinds for card page
 // @author       dithpri Moded far beyound what it once was by 9003
 // @noframes
@@ -304,18 +304,18 @@ GM_config.init(
      Mousetrap.bind([GM_config.get('closekey1'),GM_config.get('closekey2')],  function(ev){if(!window.location.href.endsWith("/auto")) window.close();});
     Mousetrap.bind([GM_config.get('todeckpagekey1'),GM_config.get('todeckpagekey2')],   function(ev){window.location.replace("https://www.nationstates.net/page=deck");});
     Mousetrap.bind([GM_config.get('reloadkey1'),GM_config.get('reloadkey2')],  function(ev){location.reload();});
-     Mousetrap.bind([GM_config.get('flipkey1'),GM_config.get('flipkey2')],  function(ev){document.getElementsByClassName("back")[0].click();document.getElementsByClassName("back")[1].click();document.getElementsByClassName("back")[2].click();document.getElementsByClassName("back")[3].click();document.getElementsByClassName("back")[4].click(); });
-     Mousetrap.bind([GM_config.get('issueskey1'),GM_config.get('issueskey2')], function(ev) {window.open("https://www.nationstates.net/page=dilemmas")});
+    Mousetrap.bind([GM_config.get('flipcardskey1'),GM_config.get('flipcardskey2')],  function(ev){document.getElementsByClassName("back")[0].click();document.getElementsByClassName("back")[1].click();document.getElementsByClassName("back")[2].click();document.getElementsByClassName("back")[3].click();document.getElementsByClassName("back")[4].click(); });
+    Mousetrap.bind([GM_config.get('issueskey1'),GM_config.get('issueskey2')], function(ev) {window.open("https://www.nationstates.net/page=dilemmas")});
 
-    Mousetrap.bind([GM_config.get('junkkey1'),GM_config.get('junkkey2')],  function(ev){let elem = document.querySelector('a.deckcard-junk-button[data-rarity="uncommon"], a.deckcard-junk-button[data-rarity="rare"], a.deckcard-junk-button[data-rarity="ultra-rare"],a.deckcard-junk-button[data-rarity="epic"]');
+    Mousetrap.bind([GM_config.get('junkkey1'), GM_config.get('junkkey2')],  function(ev){let elem = document.querySelector('a.deckcard-junk-button[data-rarity="uncommon"], a.deckcard-junk-button[data-rarity="rare"], a.deckcard-junk-button[data-rarity="ultra-rare"],a.deckcard-junk-button[data-rarity="epic"]');
    if (elem) {
     elem.click();
     elem.classList.remove('deckcard-junk-button');
     elem.classList.add('disabled');
 }});
 
-//Mousetrap.bind([GM_config.get('puppetmakerkey1'), GM_config.get('puppetmakerkey2')], function (el){
-  Mousetrap.bind(['n'], function (el){
+Mousetrap.bind([GM_config.get('puppetmakerkey1'), GM_config.get('puppetmakerkey2')], function (el){
+  //Mousetrap.bind(['n'], function (el){
     const currency = "9003";
     const animal = "9003";
    GM_config.set('count', GM_config.get('count')+1);
