@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      0.6.4
+// @version      1.7.4
 // @description  mousetrap keybinds for card page
 // @author       dithpri Moded far beyound what it once was by 9003
 // @noframes
-// @updateURL    https://github.com/jmikk/NS/raw/master/Key%20code%20short%20cuts
+// @updateURL    https://github.com/jmikk/NS/raw/master/Key%20code%20short%20cuts.user.js
 // @match        https://www.nationstates.net/*page=deck*card=*
 // @match        https://www.nationstates.net/page=deck
 // @match        https://www.nationstates.net/*card=*page=deck*
@@ -12,6 +12,7 @@
 // @match        https://www.nationstates.net/nation=*/page=deck
 // @match        https://www.nationstates.net/nation=*/page=deck/value_deck=1/template-overall=none
 // @match        https://www.nationstates.net/nation=*/page=deck*
+// @match        https://www.nationstates.net/nation=*?founded=new
 // @require      https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js?a4098
 // @require http://code.jquery.com/jquery-latest
 // @grant        window.close
@@ -55,6 +56,11 @@ GM_config.init(
     'label': GM_config.create('Password for Puppet creation'),
     'type': 'text',
     'default': '****'
+  },
+    'GiftPuppet': {
+    'label': GM_config.create('Defualt gift puppet'),
+    'type': 'text',
+    'default': '9006'
   },
     'JP': {
     'label': GM_config.create('Set as your Puppet Dump'),
@@ -213,6 +219,7 @@ GM_config.init(
 
 (function() {
     'use strict';
+
     function noinput_mousetrap(event) {
         if (event.target.classList.contains("mousetrap")) {
             event.preventDefault();
@@ -227,6 +234,13 @@ GM_config.init(
     let bid_match = document.querySelector("#lowest_matchable_bid_price > .cardprice_buy");
     ask_match = ask_match ? ask_match.textContent : 0;
     bid_match = bid_match ? bid_match.textContent : 0;
+
+
+     if(window.location.href.indexOf("/gift=1") > -1){
+         //alert("test");
+       document.getElementById("entity_name").value = GM_config.get('GiftPuppet');
+          document.getElementsByName("send_gift")[0].focus();
+       }
 
     // sell, ask
     Mousetrap.bind([GM_config.get('sellkey1'),GM_config.get('sellkey2')], function(ev) {
@@ -307,7 +321,7 @@ GM_config.init(
     Mousetrap.bind([GM_config.get('flipcardskey1'),GM_config.get('flipcardskey2')],  function(ev){document.getElementsByClassName("back")[0].click();document.getElementsByClassName("back")[1].click();document.getElementsByClassName("back")[2].click();document.getElementsByClassName("back")[3].click();document.getElementsByClassName("back")[4].click(); });
     Mousetrap.bind([GM_config.get('issueskey1'),GM_config.get('issueskey2')], function(ev) {window.open("https://www.nationstates.net/page=dilemmas")});
 
-    Mousetrap.bind([GM_config.get('junkkey1'), GM_config.get('junkkey2')],  function(ev){let elem = document.querySelector('a.deckcard-junk-button[data-rarity="common"],a.deckcard-junk-button[data-rarity="uncommon"], a.deckcard-junk-button[data-rarity="rare"], a.deckcard-junk-button[data-rarity="ultra-rare"],a.deckcard-junk-button[data-rarity="epic"]');
+    Mousetrap.bind([GM_config.get('junkkey1'), GM_config.get('junkkey2')],  function(ev){let elem = document.querySelector('a.deckcard-junk-button[data-rarity="uncommon"], a.deckcard-junk-button[data-rarity="rare"], a.deckcard-junk-button[data-rarity="ultra-rare"],a.deckcard-junk-button[data-rarity="epic"]');
    if (elem) {
     elem.click();
     elem.classList.remove('deckcard-junk-button');
