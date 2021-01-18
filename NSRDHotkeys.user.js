@@ -4,7 +4,7 @@
 // @description  Breeze but safer I guess and opened up
 // @author       9003
 // @noframes
-// @updateURL    https://github.com/jmikk/NS/raw/master/The%20Bodge%20Job.js
+// @updateURL    https://github.com/jmikk/NS/raw/master/NSRDHotkeys.user.js
 // @match        https://www.nationstates.net*
 // @match        https://www.nationstates.net/*
 // @match        https://web.archive.org/web*
