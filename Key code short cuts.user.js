@@ -283,10 +283,11 @@ GM_config.init(
     // gift page
     Mousetrap.bind([GM_config.get('opengiftpagekey'),GM_config.get('opengiftpagekey2')], function(ev) {
         noinput_mousetrap(ev);
-        document.querySelectorAll("div.deckcard-info-cardbuttons > a.button").forEach(function(el) {
-           if(el.textContent == "Gift") {
-              el.click();
-           }
+      let elemG = document.querySelector('a.deckcard-gift-button'){elemG.click();}
+      //  document.querySelectorALL("div.deckcard-info-cardbuttons > a.button").forEach(function(el) {
+           //if(el.textContent == "Gift") {
+           //   el.click();
+           //}
         });
     });
 
