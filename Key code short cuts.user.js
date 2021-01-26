@@ -14,7 +14,6 @@
 // @match        https://www.nationstates.net/nation=*/page=deck*
 // @match        https://www.nationstates.net/nation=*?founded=new
 // @require      https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js?a4098
-// @require http://code.jquery.com/jquery-latest
 // @grant        window.close
 //
 // @grant         GM_getValue
@@ -211,6 +210,16 @@ GM_config.init(
     'label': GM_config.create('Puppet maker page key 2'),
     'type': 'text',
     'default': 'N'
+    },
+    'opengiftpagekey':{
+    'label': GM_config.create('Gift current card'),
+    'type': 'text',
+    'default': 'g'
+    },
+    'opengiftpagekey2':{
+    'label': GM_config.create('Gift current card 2'),
+    'type': 'text',
+    'default': 'G'
     }
 
 
@@ -272,14 +281,14 @@ GM_config.init(
         bidbox.focus(); bidbox.select();
     });}
     // gift page
-   // Mousetrap.bind(['g', 'G'], function(ev) {
-   //     noinput_mousetrap(ev);
-   //    document.querySelectorAll("div.deckcard-info-cardbuttons > a.button").forEach(function(el) {
-   //        if(el.textContent == "Gift") {
-   //          el.click();
-   //    }
-   //     });
-   //});
+    Mousetrap.bind([GM_config.get('opengiftpagekey'),GM_config.get('opengiftpagekey2')], function(ev) {
+        noinput_mousetrap(ev);
+        document.querySelectorAll("div.deckcard-info-cardbuttons > a.button").forEach(function(el) {
+           if(el.textContent == "Gift") {
+              el.click();
+           }
+        });
+    });
 
     // match sets the ask AND bid to match with the other one use with 'b' or 's' to auto buy or sell at the best price
     Mousetrap.bind([GM_config.get('matchkey1'),GM_config.get('matchkey2')], function(ev) {
