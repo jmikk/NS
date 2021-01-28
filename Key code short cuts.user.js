@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      1.7.5
+// @version      1.7.6
 // @description  mousetrap keybinds for card page
 // @author       dithpri Moded far beyound what it once was by 9003
 // @noframes
-// @updateURL    https://github.com/jmikk/NS/raw/master/Key%20code%20short%20cuts.user.js
+// @updateURL    https://github.com/jmikk/NS/raw/master/Key%20code%20short%20cuts
 // @match        https://www.nationstates.net/*page=deck*card=*
 // @match        https://www.nationstates.net/page=deck
 // @match        https://www.nationstates.net/*card=*page=deck*
@@ -14,6 +14,7 @@
 // @match        https://www.nationstates.net/nation=*/page=deck*
 // @match        https://www.nationstates.net/nation=*?founded=new
 // @require      https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js?a4098
+// @require http://code.jquery.com/jquery-latest
 // @grant        window.close
 //
 // @grant         GM_getValue
@@ -210,16 +211,6 @@ GM_config.init(
     'label': GM_config.create('Puppet maker page key 2'),
     'type': 'text',
     'default': 'N'
-    },
-    'opengiftpagekey':{
-    'label': GM_config.create('Gift current card'),
-    'type': 'text',
-    'default': 'g'
-    },
-    'opengiftpagekey2':{
-    'label': GM_config.create('Gift current card 2'),
-    'type': 'text',
-    'default': 'G'
     }
 
 
@@ -281,15 +272,14 @@ GM_config.init(
         bidbox.focus(); bidbox.select();
     });}
     // gift page
-    Mousetrap.bind([GM_config.get('opengiftpagekey'),GM_config.get('opengiftpagekey2')], function(ev) {
-        noinput_mousetrap(ev);
-      let elemG = document.querySelector('a.deckcard-gift-button'){elemG.click();}
-      //  document.querySelectorALL("div.deckcard-info-cardbuttons > a.button").forEach(function(el) {
-           //if(el.textContent == "Gift") {
-           //   el.click();
-           //}
-        });
-    });
+   // Mousetrap.bind(['g', 'G'], function(ev) {
+   //     noinput_mousetrap(ev);
+   //    document.querySelectorAll("div.deckcard-info-cardbuttons > a.button").forEach(function(el) {
+   //        if(el.textContent == "Gift") {
+   //          el.click();
+   //    }
+   //     });
+   //});
 
     // match sets the ask AND bid to match with the other one use with 'b' or 's' to auto buy or sell at the best price
     Mousetrap.bind([GM_config.get('matchkey1'),GM_config.get('matchkey2')], function(ev) {
@@ -331,7 +321,7 @@ GM_config.init(
     Mousetrap.bind([GM_config.get('flipcardskey1'),GM_config.get('flipcardskey2')],  function(ev){document.getElementsByClassName("back")[0].click();document.getElementsByClassName("back")[1].click();document.getElementsByClassName("back")[2].click();document.getElementsByClassName("back")[3].click();document.getElementsByClassName("back")[4].click(); });
     Mousetrap.bind([GM_config.get('issueskey1'),GM_config.get('issueskey2')], function(ev) {window.open("https://www.nationstates.net/page=dilemmas")});
 
-    Mousetrap.bind([GM_config.get('junkkey1'), GM_config.get('junkkey2')],  function(ev){let elem = document.querySelector('a.deckcard-junk-button[data-rarity="common"],a.deckcard-junk-button[data-rarity="uncommon"], a.deckcard-junk-button[data-rarity="rare"], a.deckcard-junk-button[data-rarity="ultra-rare"],a.deckcard-junk-button[data-rarity="epic"]');
+    Mousetrap.bind([GM_config.get('junkkey1'), GM_config.get('junkkey2')],  function(ev){let elem = document.querySelector('a.deckcard-junk-button[data-rarity="uncommon"], a.deckcard-junk-button[data-rarity="rare"], a.deckcard-junk-button[data-rarity="ultra-rare"],a.deckcard-junk-button[data-rarity="epic"]');
    if (elem) {
     elem.click();
     elem.classList.remove('deckcard-junk-button');
