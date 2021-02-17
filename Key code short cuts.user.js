@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      1.7.7
+// @version      1.7.8
 // @description  mousetrap keybinds for card page
 // @author       dithpri Moded far beyound what it once was by 9003
 // @noframes
@@ -14,6 +14,7 @@
 // @match        https://www.nationstates.net/nation=*/page=deck*
 // @match        https://www.nationstates.net/nation=*?founded=new
 // @require      https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js?a4098
+// @require      http://code.jquery.com/jquery-latest
 // @grant        window.close
 //
 // @grant         GM_getValue
@@ -28,6 +29,7 @@
  * [b]uy, [b]id
  * [m]atch
  * [o]pen
+ * [Ctrl + O] Will open a pack of cards from any page
  * [w] will close close the tab
  * [k] to also close the tab (good for one handed farming)
  * [t]o Deck page
