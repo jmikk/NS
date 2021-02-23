@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      1.7.8
+// @version      1.7.9
 // @description  mousetrap keybinds for card page
 // @author       dithpri Moded far beyound what it once was by 9003
 // @noframes
