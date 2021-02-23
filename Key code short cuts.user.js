@@ -14,7 +14,6 @@
 // @match        https://www.nationstates.net/nation=*/page=deck*
 // @match        https://www.nationstates.net/nation=*?founded=new
 // @require      https://craig.global.ssl.fastly.net/js/mousetrap/mousetrap.min.js?a4098
-// @require      http://code.jquery.com/jquery-latest
 // @grant        window.close
 //
 // @grant         GM_getValue
