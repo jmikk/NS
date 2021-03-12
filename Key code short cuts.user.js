@@ -81,12 +81,12 @@ GM_config.init(
     'email': {
     'label': GM_config.create('Email for puppet creation'),
     'type': 'text',
-    'default': 'atlae.ns@gmail.com'
+    'default': 'YourEmailHere@DoIT.com'
     },
     'sellkey1':{
     'label': GM_config.create('Sell/Ask key 1'),
     'type': 'text',
-    'default': 'S'
+    'default': 'a'
     },
     'sellkey2':{
     'label': GM_config.create('Sell/Ask key 2'),
