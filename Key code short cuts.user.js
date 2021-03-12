@@ -36,6 +36,8 @@
  * [f]lip 9003 off becuse you are so thankful for his code, and I guess it flips the cards
  * [enter] also will flip cards now
  * [j]unks all cards listed below the default is to junk Commons, Uncommons, Rares, Ultra rares.  You still need to press enter or space for the pop up
+ * [h]old off from junking current card, skips to the next one
+ * [g]o back to previous card, since gift function doesn't exist
  * [i]ssues in a new tab
  * [r] reloads the page
  * [n] puppet maker
@@ -79,12 +81,12 @@ GM_config.init(
     'email': {
     'label': GM_config.create('Email for puppet creation'),
     'type': 'text',
-    'default': 'YourEmailHere@DoIT.com'
+    'default': 'atlae.ns@gmail.com'
     },
     'sellkey1':{
     'label': GM_config.create('Sell/Ask key 1'),
     'type': 'text',
-    'default': 'a'
+    'default': 'S'
     },
     'sellkey2':{
     'label': GM_config.create('Sell/Ask key 2'),
@@ -191,6 +193,16 @@ GM_config.init(
     'type': 'text',
     'default': 'I'
     },
+    'valuekey1':{
+    'label': GM_config.create('Value key 1'),
+    'type': 'text',
+    'default': 'v'
+    },
+    'valuekey2':{
+    'label': GM_config.create('Value key 2'),
+    'type': 'text',
+    'default': 'V'
+    },
     'junkkey1':{
     'label': GM_config.create('Junk cards key 1'),
     'type': 'text',
@@ -200,6 +212,26 @@ GM_config.init(
     'label': GM_config.create('Junk cards key 2'),
     'type': 'text',
     'default': 'J'
+    },
+    'skipkey1':{
+    'label': GM_config.create('Skip cards key 1'),
+    'type': 'text',
+    'default': 'h'
+    },
+    'skipkey2':{
+    'label': GM_config.create('Skip cards key 2'),
+    'type': 'text',
+    'default': 'H'
+    },
+    'unskipkey1':{
+    'label': GM_config.create('Un-skip cards key 1'),
+    'type': 'text',
+    'default': 'g'
+    },
+    'unskipkey2':{
+    'label': GM_config.create('Un-skip cards key 2'),
+    'type': 'text',
+    'default': 'G'
     },
     'puppetmakerkey1':{
     'label': GM_config.create('Puppet maker page key 1'),
@@ -313,19 +345,28 @@ GM_config.init(
         //});
     //open_loot_box=1
 
-     Mousetrap.bind([GM_config.get('openconfigkey1'),GM_config.get('openconfigkey2')],  function(ev){GM_config.open();});
-     Mousetrap.bind([GM_config.get('closekey1'),GM_config.get('closekey2')],  function(ev){if(!window.location.href.endsWith("/auto")) window.close();});
+    Mousetrap.bind([GM_config.get('openconfigkey1'),GM_config.get('openconfigkey2')],  function(ev){GM_config.open();});
+    Mousetrap.bind([GM_config.get('closekey1'),GM_config.get('closekey2')],  function(ev){if(!window.location.href.endsWith("/auto")) window.close();});
     Mousetrap.bind([GM_config.get('todeckpagekey1'),GM_config.get('todeckpagekey2')],   function(ev){window.location.replace("https://www.nationstates.net/page=deck");});
     Mousetrap.bind([GM_config.get('reloadkey1'),GM_config.get('reloadkey2')],  function(ev){location.reload();});
     Mousetrap.bind([GM_config.get('flipcardskey1'),GM_config.get('flipcardskey2')],  function(ev){document.getElementsByClassName("back")[0].click();document.getElementsByClassName("back")[1].click();document.getElementsByClassName("back")[2].click();document.getElementsByClassName("back")[3].click();document.getElementsByClassName("back")[4].click(); });
-    Mousetrap.bind([GM_config.get('issueskey1'),GM_config.get('issueskey2')], function(ev) {window.open("https://www.nationstates.net/page=dilemmas")});
-
-    Mousetrap.bind([GM_config.get('junkkey1'), GM_config.get('junkkey2')],  function(ev){let elem = document.querySelector('a.deckcard-junk-button[data-rarity="common"],a.deckcard-junk-button[data-rarity="uncommon"], a.deckcard-junk-button[data-rarity="rare"], a.deckcard-junk-button[data-rarity="ultra-rare"],a.deckcard-junk-button[data-rarity="epic"]');
-   if (elem) {
-    elem.click();
-    elem.classList.remove('deckcard-junk-button');
-    elem.classList.add('disabled');
-}});
+    Mousetrap.bind([GM_config.get('issueskey1'),GM_config.get('issueskey2')], function(ev) {window.open("https://www.nationstates.net/page=dilemmas", "_blank")});
+    Mousetrap.bind([GM_config.get('valuekey1'),GM_config.get('valuekey2')], function(ev) {window.open("https://www.nationstates.net/page=deck/value_deck=1", "_blank")});
+    var skip = 0;
+    Mousetrap.bind([GM_config.get('junkkey1'),GM_config.get('junkkey2')], function(ev){
+        if (document.body.dataset.nname != GM_config.get('MainNation')) {
+            let elem = document.querySelectorAll('a.deckcard-junk-button[data-rarity="common"],a.deckcard-junk-button[data-rarity="uncommon"], a.deckcard-junk-button[data-rarity="rare"], a.deckcard-junk-button[data-rarity="ultra-rare"],a.deckcard-junk-button[data-rarity="epic"]')[skip];
+            if (elem) {
+                elem.click();
+                elem.classList.remove('deckcard-junk-button');
+                elem.classList.add('disabled');
+}}});
+     Mousetrap.bind([GM_config.get('skipkey1'),GM_config.get('skipkey2')],  function(ev){
+        skip= skip + 1;
+});
+         Mousetrap.bind([GM_config.get('unskipkey1'),GM_config.get('unskipkey2')],  function(ev){
+        skip= skip - 1;
+});
 
 Mousetrap.bind([GM_config.get('puppetmakerkey1'), GM_config.get('puppetmakerkey2')], function (el){
   //Mousetrap.bind(['n'], function (el){
@@ -343,13 +384,11 @@ Name:
 </td><td>
 <input name="nation" id="x-ns-cp-nation-name" maxlength="40" type="text" value="`+GM_config.get('prefix') + GM_config.get('count') +`" style="font-size:150%" autofocus required placeholder="Nation Name...">
 </td></tr>
-
 <tr><td>
 Password:
 </td><td>
 <input type="password" id="x-ns-cp-pass" name="password" value="` + GM_config.get('password') + `" required placeholder="Password...">
 </td></tr>
-
 <tr><td>
 Classification:
 </td><td>
@@ -357,7 +396,6 @@ Classification:
 <option value="100">Republic</option>
 </select>
 </td></tr>
-
 <tr><td>
 Flag:
 </td><td>
@@ -365,35 +403,29 @@ Flag:
 <option selected value="Default.png">Default</option>
 </select>
 </td></tr>
-
 <tr><td>
 Currency:
 </td><td>
 The
 <input name="currency" maxlength="40" type="text" value="` + currency + `" placeholder="currency...">
 </td></tr>
-
 <tr><td>
 National Animal:
 </td><td>
 The
 <input name="animal" maxlength="40" type="text" value="` + animal + `" placeholder="animal...">
 </td></tr>
-
 <tr><td>
 Motto:
 </td><td>
 &ldquo;
 <input name="slogan" maxlength="55" type="text" value="` + "I love 9003" + `" placeholder="Motto..."> &rdquo;
 </td></tr>
-
 <tr><td>
 E-mail:
 </td><td>
 <input name="email" type="email" value="` + GM_config.get('email') + `" placeholder="E-mail...">
 </td></tr>
-
-
 </table>
 <br>
 <br>
@@ -401,7 +433,6 @@ E-mail:
 <br>
 <input type="checkbox" name="legal" value="1" id="legal" checked required="required">
 <br>
-
 <input type="hidden" name="name" id="name" value="">
 <input type="hidden" id="x-ns-cp-confirm-pass" name="confirm_password" value="" required placeholder="Password...">
 <input type="hidden" name="style" value="50.50.50">
@@ -419,7 +450,6 @@ E-mail:
 <form method="get" action="//www.nationstates.net">
     <button type="submit">Bring me back!</button>
 </form>
-
 `);
 
 
