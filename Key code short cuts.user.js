@@ -36,8 +36,9 @@
  * [f]lip 9003 off becuse you are so thankful for his code, and I guess it flips the cards
  * [enter] also will flip cards now
  * [j]unks all cards listed below the default is to junk Commons, Uncommons, Rares, Ultra rares.  You still need to press enter or space for the pop up
- * [h]old off from junking current card, skips to the next one
- * [g]o back to previous card, since gift function doesn't exist
+ *s[k]ips the current card so you can junk the next card
+ * [h]elps you junk the previous card
+ * [g]ifts card
  * [i]ssues in a new tab
  * [r] reloads the page
  * [n] puppet maker
@@ -216,20 +217,30 @@ GM_config.init(
     'skipkey1':{
     'label': GM_config.create('Skip cards key 1'),
     'type': 'text',
-    'default': 'h'
+    'default': 'k'
     },
     'skipkey2':{
     'label': GM_config.create('Skip cards key 2'),
     'type': 'text',
-    'default': 'H'
+    'default': 'K'
     },
     'unskipkey1':{
     'label': GM_config.create('Un-skip cards key 1'),
     'type': 'text',
-    'default': 'g'
+    'default': 'h'
     },
     'unskipkey2':{
     'label': GM_config.create('Un-skip cards key 2'),
+    'type': 'text',
+    'default': 'H'
+    },
+    'giftkey1':{
+    'label': GM_config.create('Gift key 1'),
+    'type': 'text',
+    'default': 'g'
+    },
+    'giftkey2':{
+    'label': GM_config.create('Gift key 2'),
     'type': 'text',
     'default': 'G'
     },
@@ -367,7 +378,17 @@ GM_config.init(
          Mousetrap.bind([GM_config.get('unskipkey1'),GM_config.get('unskipkey2')],  function(ev){
         skip= skip - 1;
 });
-
+    // gift page
+   Mousetrap.bind([GM_config.get('giftkey1'),GM_config.get('giftkey2')], function(ev) {
+        noinput_mousetrap(ev);
+       if(window.location.href.includes('card=')) {
+           document.querySelectorAll("div.deckcard-info-cardbuttons > a.button").forEach(function(el) {
+               if(el.textContent == "Gift") {
+                   el.click();
+               }
+        });
+       }
+   });
 Mousetrap.bind([GM_config.get('puppetmakerkey1'), GM_config.get('puppetmakerkey2')], function (el){
   //Mousetrap.bind(['n'], function (el){
     const currency = "9003";
