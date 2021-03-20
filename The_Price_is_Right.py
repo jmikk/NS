@@ -73,7 +73,7 @@ for card in cardID:
 		if b.text == "ask" and BidOrAsk == "bid" and float(a.text) > float(userSetPrice[index])+float(HowClose):
 			#print("https://www.nationstates.net/page=deck/card="+cardID[index]+"/season="+cardSeason[index])
 			final_list.append("https://www.nationstates.net/page=deck/card="+cardID[index]+"/season="+cardSeason[index]+"\n")
-			if bidmode == "yes":
+			if bigmode == "yes":
 				print("https://www.nationstates.net/page=deck/card="+cardID[index]+"/season="+cardSeason[index])
 	#sleeper(card,cardSeason[index])
 	index=index+1
