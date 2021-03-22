@@ -7,6 +7,7 @@
 // @updateURL    https://github.com/jmikk/NS/raw/master/Key%20code%20short%20cuts.user.js
 // @match        https://www.nationstates.net/*page=deck*card=*
 // @match        https://www.nationstates.net/page=deck
+// @match        https://www.nationstates.net*
 // @match        https://www.nationstates.net/*card=*page=deck*
 // @match        https://www.nationstates.net/nation=*/page=deck/value_deck=1/template-overall=none
 // @match        https://www.nationstates.net/nation=*/page=deck
