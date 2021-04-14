@@ -300,13 +300,6 @@ GM_config.init(
     ask_match = ask_match ? ask_match.textContent : 0;
     bid_match = bid_match ? bid_match.textContent : 0;
 
-
-     if(window.location.href.indexOf("/gift=1") > -1){
-         //alert("test");
-       document.getElementById("entity_name").value = GM_config.get('GiftPuppet');
-          document.getElementsByName("send_gift")[0].focus();
-       }
-
     // sell, ask
     Mousetrap.bind([GM_config.get('sellkey1'),GM_config.get('sellkey2')], function(ev) {
         noinput_mousetrap(ev);
@@ -414,6 +407,7 @@ GM_config.init(
          Mousetrap.bind([GM_config.get('unskipkey1'),GM_config.get('unskipkey2')],  function(ev){
         skip= skip - 1;
 });
+
     // gift page
    Mousetrap.bind([GM_config.get('giftkey1'),GM_config.get('giftkey2')], function(ev) {
         noinput_mousetrap(ev);
@@ -425,6 +419,12 @@ GM_config.init(
         });
        }
    });
+
+   if(window.location.href.indexOf("/gift=1") > -1) {
+      document.getElementById("entity_name").value = GM_config.get('GiftPuppet');
+      document.getElementsByName("send_gift")[0].focus();
+   }
+
 Mousetrap.bind([GM_config.get('puppetmakerkey1'), GM_config.get('puppetmakerkey2')], function (el){
     const currency = "9003";
     const animal = "9003";
