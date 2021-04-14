@@ -27,6 +27,8 @@
  * Keybinds:
  * [s]ell, [a]sk
  * [b]uy, [b]id
+ * [y] remove ask
+ * [u] remove bid
  * [m]atch
  * [o]pen
  * [Ctrl + O] Will open a pack of cards from any page
@@ -105,6 +107,26 @@ GM_config.init(
     'type': 'text',
     'default': 'B'
     },
+    'removesellkey1':{
+	'label': GM_config.create("Remove sell/ask key 1"),
+	'type': "text",
+	'default': "y",
+	},
+	'removesellkey2':{
+	'label': GM_config.create("Remove sell/ask key 2"),
+	'type': "text",
+	'default': "Y",
+	},
+	'removebuykey1':{
+	'label': GM_config.create("Remove buy/bid key 1"),
+	'type': "text",
+	'default': "u",
+	},
+	'removebuykey2':{
+	'label': GM_config.create("Remove buy/bid key 2"),
+	'type': "text",
+	'default': "U",
+	},
     'matchkey1':{
     'label': GM_config.create('Match key 1'),
     'type': 'text',
@@ -314,6 +336,29 @@ GM_config.init(
         const bidbox = document.querySelector("input.auctionbid[name=\"auction_bid\"]");
         bidbox.focus(); bidbox.select();
     });}
+
+    // Remove sell, ask
+	Mousetrap.bind([GM_config.get("removesellkey1"), GM_config.get("removesellkey2")], function (ev) {
+		 noinput_mousetrap(ev);
+		 var stuff = document.querySelectorAll(".cardauctionunmatchedrow-ask .cardprice");
+		 for (var i = 0; i < stuff.length; i++) {
+			stuff[i].click();
+		 }
+		 document.querySelector("button[name=remove_ask_price]").click();
+		}
+	);
+
+	// Remove bid
+	Mousetrap.bind([GM_config.get("removebuykey1"), GM_config.get("removebuykey2")], function (ev) {
+		 noinput_mousetrap(ev);
+		 var stuff = document.querySelectorAll(".cardauctionunmatchedrow-bid .cardprice"); //[0].click();
+		 for (var i = 0; i < stuff.length; i++) {
+			 stuff[i].click();
+		 }
+		 document.querySelector("button[name=remove_bid_price]").click();
+		}
+	);
+
     // gift page
    // Mousetrap.bind(['g', 'G'], function(ev) {
    //     noinput_mousetrap(ev);
