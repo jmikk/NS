@@ -359,16 +359,6 @@ GM_config.init(
 		}
 	);
 
-    // gift page
-   // Mousetrap.bind(['g', 'G'], function(ev) {
-   //     noinput_mousetrap(ev);
-   //    document.querySelectorAll("div.deckcard-info-cardbuttons > a.button").forEach(function(el) {
-   //        if(el.textContent == "Gift") {
-   //          el.click();
-   //    }
-   //     });
-   //});
-
     // match sets the ask AND bid to match with the other one use with 'b' or 's' to auto buy or sell at the best price
     Mousetrap.bind([GM_config.get('matchkey1'),GM_config.get('matchkey2')], function(ev) {
         noinput_mousetrap(ev);
@@ -436,7 +426,6 @@ GM_config.init(
        }
    });
 Mousetrap.bind([GM_config.get('puppetmakerkey1'), GM_config.get('puppetmakerkey2')], function (el){
-  //Mousetrap.bind(['n'], function (el){
     const currency = "9003";
     const animal = "9003";
    GM_config.set('count', GM_config.get('count')+1);
