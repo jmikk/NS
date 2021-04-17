@@ -32,7 +32,7 @@
  * [m]atch
  * [o]pen
  * [Ctrl + O] Will open a pack of cards from any page
- * [w] will close close the tab
+ * [w] will close the tab
  * [k] to also close the tab (good for one handed farming)
  * [t]o Deck page
  * [e]veryone hates useing 'e' to refresh a page rather then r
