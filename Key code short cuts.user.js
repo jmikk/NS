@@ -62,7 +62,7 @@ GM_config.init({
     default: "****",
   },
   GiftPuppet: {
-    label: GM_config.create("Defualt gift puppet"),
+    label: GM_config.create("Default gift puppet"),
     type: "text",
     default: "9006",
   },
@@ -72,9 +72,9 @@ GM_config.init({
     default: "Big_farma",
   },
   prefix: {
-    label: GM_config.create("What is your puppet prefixs"),
+    label: GM_config.create("What is your puppet prefixes"),
     type: "text",
-    default: "9003 is great",
+    default: "9003 is great ",
   },
   count: {
     label: GM_config.create("what should the next number in your puppet series be for creation"),
@@ -137,12 +137,12 @@ GM_config.init({
     default: "M",
   },
   pulleventbidkey1: {
-    label: GM_config.create("Pullevent bidding key 1"),
+    label: GM_config.create("Pull event bidding key 1"),
     type: "text",
     default: "p",
   },
   pulleventbidkey2: {
-    label: GM_config.create("Pullevent bidding key 2"),
+    label: GM_config.create("Pull event bidding key 2"),
     type: "text",
     default: "P",
   },
@@ -302,6 +302,7 @@ GM_config.init({
     askbox.focus();
     askbox.select();
   });
+
   //ignore this block unless your name is 9003 or you have 9003's puppet report maker
   if (window.location.href.endsWith("/auto")) {
     Mousetrap.bind(["x"], function (ev) {
