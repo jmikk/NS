@@ -1,18 +1,20 @@
 // ==UserScript==
-// @name         Anti Region move
+// @name         No region move
 // @version      0.1
-// @description  Remove the move region button
-// @author       9003 (Thanks dithpri for the oringal code)
+// @namespace    dithpri
+// @description  prevent moving regions on main
+// @author       dithpri stole with permsion by 9003
+// @noframes
 // @match        https://www.nationstates.net/*region=*
-// @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';
     if (document.body.dataset.nname == '9003') {
-
-    var butts = document.getElementsByName("button danger icon ");
-       butts[1].remove;
+        document
+            .querySelectorAll('button[name="move_region"]')
+            .forEach(function (el, idx) {
+            el.disabled = true;
+        });
     }
-    // Your code here...
 })();
