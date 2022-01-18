@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      1.7.9
+// @version      1.7.10
 // @description  mousetrap keybinds for card page
 // @author       dithpri Moded far beyound what it once was by 9003
 // @noframes
@@ -265,6 +265,18 @@ GM_config.init({
     label: GM_config.create("Gift key 2"),
     type: "text",
     default: "G",
+
+  },
+
+  mainsenderkey1: {
+    label: GM_config.create("Open up this page in main container key 1"),
+    type: "text",
+    default: "y",
+  },
+  mainsenderkey2: {
+    label: GM_config.create("Open up this page in main container key 1"),
+    type: "text",
+    default: "Y",
   },
   puppetmakerkey1: {
     label: GM_config.create("Puppet maker page key 1"),
@@ -434,6 +446,9 @@ GM_config.init({
   });
   Mousetrap.bind([GM_config.get("unskipkey1"), GM_config.get("unskipkey2")], function (ev) {
     skip = skip - 1;
+  });
+    Mousetrap.bind([GM_config.get("mainsenderkey1"), GM_config.get("mainsenderkey2")], function (ev) {
+    window.open(window.location.href+"/nation="+ GM_config.get("MainNation")+"/container="+ GM_config.get("MainNation"), "_blank");
   });
 
   // gift page
