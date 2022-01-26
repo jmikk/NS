@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      1.7.10
+// @version      1.8.0
 // @description  mousetrap keybinds for card page
-// @author       dithpri Moded far beyound what it once was by 9003
+// @author       OG base code by: dithpri Moded far beyound what it once was by 9003
 // @noframes
 // @updateURL    https://github.com/jmikk/NS/raw/master/Key%20code%20short%20cuts.user.js
 // @match        https://www.nationstates.net/*page=deck*card=*
@@ -39,13 +39,14 @@
  * [f]lip 9003 off becuse you are so thankful for his code, and I guess it flips the cards
  * [enter] also will flip cards now
  * [j]unks all cards listed below the default is to junk Commons, Uncommons, Rares, Ultra rares.  You still need to press enter or space for the pop up
- *s[k]ips the current card so you can junk the next card
+ * s[k]ips the current card so you can junk the next card
  * [h]elps you junk the previous card
  * [g]ifts card
  * [i]ssues in a new tab
  * [r] reloads the page
  * [n] puppet maker
  * [x] opens the config.
+ * [1]-[0] Opens the [1]-[10]th card on the page as if clicking the info button
  */
 
 var count = 0;
@@ -467,6 +468,47 @@ GM_config.init({
     document.getElementById("entity_name").value = GM_config.get("GiftPuppet");
     document.getElementsByName("send_gift")[0].focus();
   }
+     Mousetrap.bind("1", function (ev) {
+     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+         info1[1].click();
+  });
+     Mousetrap.bind("2", function (ev) {
+     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+         info1[2].click();
+  });
+    Mousetrap.bind("3", function (ev) {
+     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+         info1[3].click();
+  });
+    Mousetrap.bind("4", function (ev) {
+     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+         info1[4].click();
+  });
+    Mousetrap.bind("5", function (ev) {
+     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+         info1[5].click();
+  });
+     Mousetrap.bind("6", function (ev) {
+     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+         info1[6].click();
+  });
+     Mousetrap.bind("7", function (ev) {
+     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+         info1[7].click();
+  });
+     Mousetrap.bind("8", function (ev) {
+     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+         info1[8].click();
+  });
+     Mousetrap.bind("9", function (ev) {
+     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+         info1[9].click();
+  });
+     Mousetrap.bind("0", function (ev) {
+     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+         info1[10].click();
+  });
+
 
   Mousetrap.bind(
     [GM_config.get("puppetmakerkey1"), GM_config.get("puppetmakerkey2")],
