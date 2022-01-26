@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      1.8.0
+// @version      1.8.1
 // @description  mousetrap keybinds for card page
 // @author       OG base code by: dithpri Moded far beyound what it once was by 9003
 // @noframes
@@ -470,43 +470,53 @@ GM_config.init({
   }
      Mousetrap.bind("1", function (ev) {
      var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-         info1[1].click();
+     var linky = info1[1].getAttribute("href")
+     window.open(linky, "_blank");
   });
      Mousetrap.bind("2", function (ev) {
      var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-         info1[2].click();
+     var linky = info1[2].getAttribute("href")
+     window.open(linky, "_blank");
   });
-    Mousetrap.bind("3", function (ev) {
+     Mousetrap.bind("3", function (ev) {
      var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-         info1[3].click();
+     var linky = info1[3].getAttribute("href")
+     window.open(linky, "_blank");
   });
-    Mousetrap.bind("4", function (ev) {
+     Mousetrap.bind("4", function (ev) {
      var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-         info1[4].click();
+     var linky = info1[4].getAttribute("href")
+     window.open(linky, "_blank");
   });
-    Mousetrap.bind("5", function (ev) {
+     Mousetrap.bind("5", function (ev) {
      var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-         info1[5].click();
+     var linky = info1[5].getAttribute("href")
+     window.open(linky, "_blank");
   });
-     Mousetrap.bind("6", function (ev) {
+ Mousetrap.bind("6", function (ev) {
      var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-         info1[6].click();
+     var linky = info1[6].getAttribute("href")
+     window.open(linky, "_blank");
   });
      Mousetrap.bind("7", function (ev) {
      var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-         info1[7].click();
+     var linky = info1[7].getAttribute("href")
+     window.open(linky, "_blank");
   });
      Mousetrap.bind("8", function (ev) {
      var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-         info1[8].click();
+     var linky = info1[8].getAttribute("href")
+     window.open(linky, "_blank");
   });
      Mousetrap.bind("9", function (ev) {
      var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-         info1[9].click();
+     var linky = info1[9].getAttribute("href")
+     window.open(linky, "_blank");
   });
      Mousetrap.bind("0", function (ev) {
      var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-         info1[10].click();
+     var linky = info1[10].getAttribute("href")
+     window.open(linky, "_blank");
   });
 
 
