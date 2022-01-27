@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      1.8.2
+// @version      1.8.4
 // @description  mousetrap keybinds for card page
 // @author       OG base code by: dithpri Moded far beyound what it once was by 9003
 // @noframes
@@ -469,54 +469,64 @@ GM_config.init({
     document.getElementsByName("send_gift")[0].focus();
   }
      Mousetrap.bind("1", function (ev) {
-     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+     if(window.location.href=="https://www.nationstates.net/page=deck")
+     {var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
      var linky = info1[1].getAttribute("href")
-     window.open(linky, "_blank");
+     window.open(linky, "_blank");}
   });
      Mousetrap.bind("2", function (ev) {
-     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-     var linky = info1[4].getAttribute("href")
-     window.open(linky, "_blank");
+        if(window.location.href=="https://www.nationstates.net/page=deck"){
+            var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+            var linky = info1[4].getAttribute("href")
+            window.open(linky, "_blank");}
   });
      Mousetrap.bind("3", function (ev) {
-     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-     var linky = info1[7].getAttribute("href")
-     window.open(linky, "_blank");
+         if(window.location.href=="https://www.nationstates.net/page=deck")
+         {var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+          var linky = info1[7].getAttribute("href")
+          window.open(linky, "_blank");}
   });
      Mousetrap.bind("4", function (ev) {
-     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-     var linky = info1[10].getAttribute("href")
-     window.open(linky, "_blank");
+      if(window.location.href=="https://www.nationstates.net/page=deck"){
+         var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+          var linky = info1[10].getAttribute("href")
+          window.open(linky, "_blank");}
   });
      Mousetrap.bind("5", function (ev) {
-     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-     var linky = info1[13].getAttribute("href")
-     window.open(linky, "_blank");
+      if(window.location.href=="https://www.nationstates.net/page=deck"){
+         var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+          var linky = info1[13].getAttribute("href")
+          window.open(linky, "_blank");}
   });
  Mousetrap.bind("6", function (ev) {
-     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
-     var linky = info1[16].getAttribute("href")
-     window.open(linky, "_blank");
+      if(window.location.href=="https://www.nationstates.net/page=deck")
+      {var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+       var linky = info1[16].getAttribute("href")
+       window.open(linky, "_blank");}
   });
      Mousetrap.bind("7", function (ev) {
-     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+      if(window.location.href=="https://www.nationstates.net/page=deck"){
+         var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
      var linky = info1[19].getAttribute("href")
-     window.open(linky, "_blank");
+     window.open(linky, "_blank");}
   });
      Mousetrap.bind("8", function (ev) {
-     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+     if(window.location.href=="https://www.nationstates.net/page=deck"){
+         var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
      var linky = info1[22].getAttribute("href")
-     window.open(linky, "_blank");
+     window.open(linky, "_blank");}
   });
      Mousetrap.bind("9", function (ev) {
-     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+     if(window.location.href=="https://www.nationstates.net/page=deck"){
+         var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
      var linky = info1[25].getAttribute("href")
-     window.open(linky, "_blank");
+     window.open(linky, "_blank");}
   });
      Mousetrap.bind("0", function (ev) {
-     var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
+     if(window.location.href=="https://www.nationstates.net/page=deck"){
+         var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
      var linky = info1[28].getAttribute("href")
-     window.open(linky, "_blank");
+     window.open(linky, "_blank");}
   });
 
 
