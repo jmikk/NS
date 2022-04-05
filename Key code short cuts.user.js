@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      1.8.4
+// @version      1.9.0
 // @description  mousetrap keybinds for card page
 // @author       OG base code by: dithpri Moded far beyound what it once was by 9003
 // @noframes
@@ -237,6 +237,11 @@ GM_config.init({
     type: "text",
     default: "J",
   },
+  closeIfAllJunked: {
+    label: GM_config.create("If the junk key is pressed and there's no cards to junk, close the tab instead"),
+    type: "checkbox",
+    default: false,
+  },
   skipkey1: {
     label: GM_config.create("Skip cards key 1"),
     type: "text",
@@ -439,6 +444,8 @@ GM_config.init({
         elem.click();
         elem.classList.remove("deckcard-junk-button");
         elem.classList.add("disabled");
+      } else if (GM_config.get(["closeIfAllJunked"])) {
+        window.close();
       }
     }
   });
