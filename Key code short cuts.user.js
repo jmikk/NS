@@ -1,12 +1,13 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      1.9.0
+// @version      1.10.0
 // @description  mousetrap keybinds for card page
 // @author       OG base code by: dithpri Moded far beyound what it once was by 9003
 // @noframes
 // @updateURL    https://github.com/jmikk/NS/raw/master/Key%20code%20short%20cuts.user.js
 // @match        https://www.nationstates.net/*page=deck*card=*
 // @match        https://www.nationstates.net/page=deck
+// @match        https://www.nationstates.net/page=deck/*
 // @match        https://www.nationstates.net*
 // @match        https://www.nationstates.net/*card=*page=deck*
 // @match        https://www.nationstates.net/nation=*/page=deck/value_deck=1/template-overall=none
@@ -47,6 +48,7 @@
  * [n] puppet maker
  * [x] opens the config.
  * [1]-[0] Opens the [1]-[10]th card on the page as if clicking the info button
+ * [a] pulls up auction page under the trades menu
  */
 
 var count = 0;
@@ -294,6 +296,16 @@ GM_config.init({
     type: "text",
     default: "N",
   },
+  auctionkey1: {
+    label: GM_config.create("Puppet maker page key 2"),
+    type: "text",
+    default: "a",
+  },
+  auctionkey2: {
+    label: GM_config.create("Puppet maker page key 2"),
+    type: "text",
+    default: "A",
+  },
 });
 
 (function () {
@@ -534,6 +546,12 @@ GM_config.init({
          var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
      var linky = info1[28].getAttribute("href")
      window.open(linky, "_blank");}
+  });
+     Mousetrap.bind("left", function (ev) {
+         document.getElementsByClassName("pagpage-arrow")[0].click()
+  });
+         Mousetrap.bind("right", function (ev) {
+         document.getElementsByClassName("pagpage-arrow")[0].click()
   });
 
 
