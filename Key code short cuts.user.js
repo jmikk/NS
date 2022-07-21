@@ -551,7 +551,7 @@ GM_config.init({
          document.getElementsByClassName("pagpage-arrow")[0].click()
   });
          Mousetrap.bind("right", function (ev) {
-         document.getElementsByClassName("pagpage-arrow")[0].click()
+         document.getElementsByClassName("pagpage-arrow")[1].click()
   });
 
 
