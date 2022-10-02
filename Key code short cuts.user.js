@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      1.10.0
+// @version      1.11.0
 // @description  mousetrap keybinds for card page
 // @author       OG base code by: dithpri Moded far beyound what it once was by 9003
 // @noframes
@@ -331,7 +331,7 @@ GM_config.init({
     const askbox = document.querySelector('input.auctionbid[name="auction_ask"]');
     askbox.focus();
     askbox.select();
-  });
+  }, "keyup");
 
   //ignore this block unless your name is 9003 or you have 9003's puppet report maker
   if (window.location.href.endsWith("/auto")) {
@@ -341,7 +341,7 @@ GM_config.init({
       const askbox = document.querySelector('input.auctionbid[name="auction_ask"]');
       askbox.focus();
       askbox.select();
-    });
+    }, "keyup");
   }
 
   // buy, bid
@@ -351,7 +351,7 @@ GM_config.init({
     const bidbox = document.querySelector('input.auctionbid[name="auction_bid"]');
     bidbox.focus();
     bidbox.select();
-  });
+  }, "keyup");
 
   //ignore this block unless your name is 9003 or you have 9003's puppet report maker
   if (window.location.href.endsWith("/auto")) {
@@ -361,7 +361,7 @@ GM_config.init({
       const bidbox = document.querySelector('input.auctionbid[name="auction_bid"]');
       bidbox.focus();
       bidbox.select();
-    });
+    }, "keyup");
   }
 
   // Remove sell, ask
@@ -372,7 +372,7 @@ GM_config.init({
       stuff[i].click();
     }
     document.querySelector("button[name=remove_ask_price]").click();
-  });
+  }, "keyup");
 
   // Remove bid
   Mousetrap.bind([GM_config.get("removebuykey1"), GM_config.get("removebuykey2")], function (ev) {
@@ -382,7 +382,7 @@ GM_config.init({
       stuff[i].click();
     }
     document.querySelector("button[name=remove_bid_price]").click();
-  });
+  }, "keyup");
 
   // match sets the ask AND bid to match with the other one use with 'b' or 's' to auto buy or sell at the best price
   Mousetrap.bind([GM_config.get("matchkey1"), GM_config.get("matchkey2")], function (ev) {
@@ -393,7 +393,7 @@ GM_config.init({
     if (bid_match && bid_match > 0) {
       document.querySelector('input.auctionbid[name="auction_bid"]').value = bid_match;
     }
-  });
+  }, "keyup");
 
   Mousetrap.bind(
     [GM_config.get("pulleventbidkey1"), GM_config.get("pulleventbidkey2")],
@@ -407,12 +407,13 @@ GM_config.init({
       }
       document.querySelector('input#new_price_value[name="new_price"]').stepUp();
       document.getElementById("change_price_button").click();
-    }
+    },
+    "keyup"
   );
 
   Mousetrap.bind([GM_config.get("openpackkey1"), GM_config.get("openpackkey2")], function (ev) {
     document.getElementsByClassName("button lootboxbutton")[0].click();
-  });
+  }, "keyup");
 
   //Mousetrap.bind(['ctrl+o'], async function(ev){
   //alert("1");
@@ -423,29 +424,29 @@ GM_config.init({
 
   Mousetrap.bind([GM_config.get("openconfigkey1"), GM_config.get("openconfigkey2")], function (ev) {
     GM_config.open();
-  });
+  }, "keyup");
   Mousetrap.bind([GM_config.get("closekey1"), GM_config.get("closekey2")], function (ev) {
     if (!window.location.href.endsWith("/auto")) window.close();
-  });
+  }, "keyup");
   Mousetrap.bind([GM_config.get("todeckpagekey1"), GM_config.get("todeckpagekey2")], function (ev) {
     window.location.replace("https://www.nationstates.net/page=deck");
-  });
+  }, "keyup");
   Mousetrap.bind([GM_config.get("reloadkey1"), GM_config.get("reloadkey2")], function (ev) {
     location.reload();
-  });
+  }, "keyup");
   Mousetrap.bind([GM_config.get("flipcardskey1"), GM_config.get("flipcardskey2")], function (ev) {
     document.getElementsByClassName("back")[0].click();
     document.getElementsByClassName("back")[1].click();
     document.getElementsByClassName("back")[2].click();
     document.getElementsByClassName("back")[3].click();
     document.getElementsByClassName("back")[4].click();
-  });
+  }, "keyup");
   Mousetrap.bind([GM_config.get("issueskey1"), GM_config.get("issueskey2")], function (ev) {
     window.open("https://www.nationstates.net/page=dilemmas", "_blank");
-  });
+  }, "keyup");
   Mousetrap.bind([GM_config.get("valuekey1"), GM_config.get("valuekey2")], function (ev) {
     window.open("https://www.nationstates.net/page=deck/value_deck=1", "_blank");
-  });
+  }, "keyup");
   var skip = 0;
   Mousetrap.bind([GM_config.get("junkkey1"), GM_config.get("junkkey2")], function (ev) {
     if (document.body.dataset.nname != GM_config.get("MainNation")) {
@@ -460,16 +461,16 @@ GM_config.init({
         window.close();
       }
     }
-  });
+  }, "keyup");
   Mousetrap.bind([GM_config.get("skipkey1"), GM_config.get("skipkey2")], function (ev) {
     skip = skip + 1;
-  });
+  }, "keyup");
   Mousetrap.bind([GM_config.get("unskipkey1"), GM_config.get("unskipkey2")], function (ev) {
     skip = skip - 1;
-  });
+  }, "keyup");
     Mousetrap.bind([GM_config.get("mainsenderkey1"), GM_config.get("mainsenderkey2")], function (ev) {
     window.open(window.location.href+"/nation="+ GM_config.get("MainNation")+"/container="+ GM_config.get("MainNation"), "_blank");
-  });
+  }, "keyup");
 
   // gift page
   Mousetrap.bind([GM_config.get("giftkey1"), GM_config.get("giftkey2")], function (ev) {
@@ -481,7 +482,7 @@ GM_config.init({
         }
       });
     }
-  });
+  }, "keyup");
 
   if (window.location.href.indexOf("/gift=1") > -1) {
     document.getElementById("entity_name").value = GM_config.get("GiftPuppet");
@@ -492,67 +493,67 @@ GM_config.init({
      {var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
      var linky = info1[1].getAttribute("href")
      window.open(linky, "_blank");}
-  });
+  }, "keyup");
      Mousetrap.bind("2", function (ev) {
         if(window.location.href=="https://www.nationstates.net/page=deck"){
             var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
             var linky = info1[4].getAttribute("href")
             window.open(linky, "_blank");}
-  });
+  }, "keyup");
      Mousetrap.bind("3", function (ev) {
          if(window.location.href=="https://www.nationstates.net/page=deck")
          {var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
           var linky = info1[7].getAttribute("href")
           window.open(linky, "_blank");}
-  });
+  }, "keyup");
      Mousetrap.bind("4", function (ev) {
       if(window.location.href=="https://www.nationstates.net/page=deck"){
          var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
           var linky = info1[10].getAttribute("href")
           window.open(linky, "_blank");}
-  });
+  }, "keyup");
      Mousetrap.bind("5", function (ev) {
       if(window.location.href=="https://www.nationstates.net/page=deck"){
          var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
           var linky = info1[13].getAttribute("href")
           window.open(linky, "_blank");}
-  });
+  }, "keyup");
  Mousetrap.bind("6", function (ev) {
       if(window.location.href=="https://www.nationstates.net/page=deck")
       {var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
        var linky = info1[16].getAttribute("href")
        window.open(linky, "_blank");}
-  });
+  }, "keyup");
      Mousetrap.bind("7", function (ev) {
       if(window.location.href=="https://www.nationstates.net/page=deck"){
          var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
      var linky = info1[19].getAttribute("href")
      window.open(linky, "_blank");}
-  });
+  }, "keyup");
      Mousetrap.bind("8", function (ev) {
      if(window.location.href=="https://www.nationstates.net/page=deck"){
          var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
      var linky = info1[22].getAttribute("href")
      window.open(linky, "_blank");}
-  });
+  }, "keyup");
      Mousetrap.bind("9", function (ev) {
      if(window.location.href=="https://www.nationstates.net/page=deck"){
          var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
      var linky = info1[25].getAttribute("href")
      window.open(linky, "_blank");}
-  });
+  }, "keyup");
      Mousetrap.bind("0", function (ev) {
      if(window.location.href=="https://www.nationstates.net/page=deck"){
          var info1 = document.querySelectorAll('[href*="/page=deck/card="]');
      var linky = info1[28].getAttribute("href")
      window.open(linky, "_blank");}
-  });
+  }, "keyup");
      Mousetrap.bind("left", function (ev) {
          document.getElementsByClassName("pagpage-arrow")[0].click()
-  });
+  }, "keyup");
          Mousetrap.bind("right", function (ev) {
          document.getElementsByClassName("pagpage-arrow")[1].click()
-  });
+  }, "keyup");
 
 
   Mousetrap.bind(
@@ -653,7 +654,8 @@ E-mail:
       };
       //document.getElementById('x-ns-cp-nation-name').value = location.href.replace(/^.*\/x-ns-cp\?x-nsh-nation=([A-Za-z0-9_-]+)$/, "$1").replace(/_/g, " ");
       document.getElementByClass("button").focus();
-    }
+    },
+    "keyup"
   );
 
   inputs.forEach(function (el) {
