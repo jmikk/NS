@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      1.11.0
+// @version      1.12.0
 // @description  mousetrap keybinds for card page
 // @author       OG base code by: dithpri Moded far beyound what it once was by 9003
 // @noframes
@@ -53,29 +53,22 @@
 
 var count = 0;
 GM_config.init({
+  /* General settings */
   MainNation: {
     label: GM_config.create("Main Nation"),
     section: [GM_config.create("Config settings"), "This is where you put your info in"],
     type: "text",
     default: "9003",
   },
-  password: {
-    label: GM_config.create("Password for Puppet creation"),
-    type: "text",
-    default: "****",
-  },
   GiftPuppet: {
     label: GM_config.create("Default gift puppet"),
     type: "text",
     default: "9006",
   },
-  JP: {
-    label: GM_config.create("Set as your Puppet Dump"),
-    type: "text",
-    default: "Big_farma",
-  },
+  /* Puppet creator */
   prefix: {
     label: GM_config.create("What is your puppet prefixes"),
+    section: "Puppet creator",
     type: "text",
     default: "9003 is great ",
   },
@@ -84,13 +77,40 @@ GM_config.init({
     type: "int",
     default: 0,
   },
+  password: {
+    label: GM_config.create("Password for Puppet creation"),
+    type: "text",
+    default: "****",
+  },
   email: {
     label: GM_config.create("Email for puppet creation"),
     type: "text",
     default: "YourEmailHere@DoIT.com",
   },
+  motto: {
+    label: GM_config.create("Motto"),
+    type: "text",
+    default: "I love 9003",
+  },
+  currency: {
+    label: GM_config.create("Currency"),
+    type: "text",
+    default: "9003",
+  },
+  animal: {
+    label: GM_config.create("Animal"),
+    type: "text",
+    default: "9003",
+  },
+  JP: {
+    label: GM_config.create("Set as your Puppet Dump"),
+    type: "text",
+    default: "Big_farma",
+  },
+  /* Keybinds */
   sellkey1: {
     label: GM_config.create("Sell/Ask key 1"),
+    section: "Keybinds",
     type: "text",
     default: "a",
   },
@@ -559,8 +579,9 @@ GM_config.init({
   Mousetrap.bind(
     [GM_config.get("puppetmakerkey1"), GM_config.get("puppetmakerkey2")],
     function (el) {
-      const currency = "9003";
-      const animal = "9003";
+      const currency = GM_config.get("currency");
+      const animal = GM_config.get("animal");
+      const motto = GM_config.get("motto");
       GM_config.set("count", GM_config.get("count") + 1);
       GM_config.save();
 
@@ -612,7 +633,7 @@ Motto:
 </td><td>
 &ldquo;
 <input name="slogan" maxlength="55" type="text" value="` +
-          "I love 9003" +
+          motto +
           `" placeholder="Motto..."> &rdquo;
 </td></tr>
 <tr><td>
