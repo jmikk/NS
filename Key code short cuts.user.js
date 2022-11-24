@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Key code short cuts
-// @version      1.12.0
+// @version      1.12.2
 // @description  mousetrap keybinds for card page
 // @author       OG base code by: dithpri Moded far beyound what it once was by 9003
 // @noframes
@@ -9,6 +9,7 @@
 // @match        https://www.nationstates.net/page=deck
 // @match        https://www.nationstates.net/page=deck/*
 // @match        https://www.nationstates.net*
+// @match        https://www.nationstates.net/*
 // @match        https://www.nationstates.net/*card=*page=deck*
 // @match        https://www.nationstates.net/nation=*/page=deck/value_deck=1/template-overall=none
 // @match        https://www.nationstates.net/nation=*/page=deck
@@ -297,12 +298,12 @@ GM_config.init({
   },
 
   mainsenderkey1: {
-    label: GM_config.create("Open up this page in main container key 1"),
+    label: GM_config.create("Open up this page in main gifting puppet container key 1"),
     type: "text",
     default: "y",
   },
   mainsenderkey2: {
-    label: GM_config.create("Open up this page in main container key 1"),
+    label: GM_config.create("Open up this page in gifting puppet container key 1"),
     type: "text",
     default: "Y",
   },
@@ -489,7 +490,7 @@ GM_config.init({
     skip = skip - 1;
   }, "keyup");
     Mousetrap.bind([GM_config.get("mainsenderkey1"), GM_config.get("mainsenderkey2")], function (ev) {
-    window.open(window.location.href+"/nation="+ GM_config.get("MainNation")+"/container="+ GM_config.get("MainNation"), "_blank");
+    window.open(window.location.href+"/nation="+ GM_config.get("GiftPuppet")+"/container="+ GM_config.get("GiftPuppet"), "_blank");
   }, "keyup");
 
   // gift page
