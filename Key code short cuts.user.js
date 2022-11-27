@@ -1,6 +1,6 @@
 // ==UserScript==
-// @name         Key code short cuts
-// @version      1.12.2
+// @name         Hotkeys for cards
+// @version      1.13.3
 // @description  mousetrap keybinds for card page
 // @author       OG base code by: dithpri Moded far beyound what it once was by 9003
 // @noframes
@@ -113,7 +113,7 @@ GM_config.init({
     label: GM_config.create("Sell/Ask key 1"),
     section: "Keybinds",
     type: "text",
-    default: "a",
+    default: "S",
   },
   sellkey2: {
     label: GM_config.create("Sell/Ask key 2"),
@@ -198,7 +198,7 @@ GM_config.init({
   closekey2: {
     label: GM_config.create("Close key 2"),
     type: "text",
-    default: "k",
+    default: "W",
   },
   todeckpagekey1: {
     label: GM_config.create("To deck page key 1"),
@@ -327,6 +327,57 @@ GM_config.init({
     type: "text",
     default: "A",
   },
+  notices: {
+    label: GM_config.create("Open your notices"),
+    type: "text",
+    default: "p",
+  },
+  notices2: {
+    label: GM_config.create("Open your notices"),
+    type: "text",
+    default: "P",
+  },
+    TG1: {
+        label: GM_config.create("Opens your Telagrams"),
+        type: "text",
+        default: "l",
+    },
+    TG2: {
+        label: GM_config.create("Opens your Telagrams"),
+        type: "text",
+        default: "L",
+    },
+    Nsettings1: {
+        label: GM_config.create("Opens your nations settings"),
+        type: "text",
+        default: "d",
+    },
+    home1: {
+        label: GM_config.create("opens up your home naiton page"),
+        type: "text",
+        default: "[",
+    },
+        market: {
+        label: GM_config.create("opens up the market"),
+        type: "text",
+        default: "]",
+    },
+   /*Other junk*/
+    FirstTime:{
+    section: "Other assorted Advanced junk",
+    label: GM_config.create("First time pop up warning"),
+    type: "checkbox",
+    default: true
+    },
+    newTab:{
+    label: GM_config.create("Always open in a new tab on issues"),
+    type: "checkbox",
+    default: true
+    },
+    help:{
+    label: GM_config.create("HELP PAGE"),
+    type: "text",
+    default: "."},
 });
 
 (function () {
@@ -338,12 +389,20 @@ GM_config.init({
       event.stopPropagation();
     }
   }
-
   const inputs = document.querySelectorAll('input.auctionbid[name="auction_ask"], input.auctionbid[name="auction_bid"]');
   let ask_match = document.querySelector("#highest_matchable_ask_price > .cardprice_sell");
   let bid_match = document.querySelector("#lowest_matchable_bid_price > .cardprice_buy");
   ask_match = ask_match ? ask_match.textContent : 0;
   bid_match = bid_match ? bid_match.textContent : 0;
+
+    //IF YOU ARE ANNOYED BY A SINGLE POP UP DELETE FROM HERE TO THE NEXT **** LINE *********************************************************************************************************
+    if (GM_config.get("FirstTime"))
+  {
+      alert("Hello, This message will only pop up once, and if you really hate it you can delete it in the code.(line 352ish-357ish)\nFirst off thanks for using 9003's hotkeys! Remember to say thanks.  Also if you want to change keys for hotkeys press x and use the built in config menu\nFor a full list of commands use [.]");
+      GM_config.set("FirstTime",false);
+      GM_config.save();
+  }
+   //END DELETE HERE ***************************************************************************************************************************************************************************
 
   // sell, ask
   Mousetrap.bind([GM_config.get("sellkey1"), GM_config.get("sellkey2")], function (ev) {
@@ -446,15 +505,63 @@ GM_config.init({
   Mousetrap.bind([GM_config.get("openconfigkey1"), GM_config.get("openconfigkey2")], function (ev) {
     GM_config.open();
   }, "keyup");
+  //HELP Page
+    Mousetrap.bind([GM_config.get("help")], function (ev) {
+    window.open("https://docs.google.com/spreadsheets/d/1LM1fWUM4YaQ6WNkZUjsCbApp1i1zoKc5HTwVIj4C2c4/edit?usp=sharing");
+  }, "keyup");
+    //close
   Mousetrap.bind([GM_config.get("closekey1"), GM_config.get("closekey2")], function (ev) {
     if (!window.location.href.endsWith("/auto")) window.close();
   }, "keyup");
+    //To deck page
   Mousetrap.bind([GM_config.get("todeckpagekey1"), GM_config.get("todeckpagekey2")], function (ev) {
     window.location.replace("https://www.nationstates.net/page=deck");
   }, "keyup");
+    //refresh
   Mousetrap.bind([GM_config.get("reloadkey1"), GM_config.get("reloadkey2")], function (ev) {
     location.reload();
   }, "keyup");
+
+    //Notices Template open x page
+  Mousetrap.bind([GM_config.get("notices"), GM_config.get("notices2")], function (ev) {
+    if (GM_config.get("newTab"))
+      {window.open("https://www.nationstates.net/page=notices","_blank");}
+     else{
+     window.open("https://www.nationstates.net/page=notices","_self");}
+  }, "keyup");
+
+      Mousetrap.bind([GM_config.get("market")], function (ev) {
+    if (GM_config.get("newTab"))
+      {window.open("https://www.nationstates.net/page=deck/show_market=auctions","_blank");}
+     else{
+     window.open("https://www.nationstates.net/page=deck/show_market=auctions","_self");}
+  }, "keyup");
+
+      //Home page
+      Mousetrap.bind([GM_config.get("home1")], function (ev) {
+    if (GM_config.get("newTab"))
+      {window.open("https://www.nationstates.net","_blank");}
+     else{
+     window.open("https://www.nationstates.net","_self");}
+  }, "keyup");
+
+    //Nsettings
+     Mousetrap.bind([GM_config.get("Nsettings1")], function (ev) {
+    if (GM_config.get("newTab"))
+      {window.open("https://www.nationstates.net/page=settings","_blank");}
+     else{
+     window.open("https://www.nationstates.net/page=settings","_self");}
+  }, "keyup");
+
+     //TGs Template open x page
+  Mousetrap.bind([GM_config.get("TG1"), GM_config.get("TG2")], function (ev) {
+    if (GM_config.get("newTab"))
+      {window.open("https://www.nationstates.net/page=telegrams","_blank");}
+     else{
+     window.open("https://www.nationstates.net/page=telegrams","_self");}
+  }, "keyup");
+
+  //Flip cards
   Mousetrap.bind([GM_config.get("flipcardskey1"), GM_config.get("flipcardskey2")], function (ev) {
     document.getElementsByClassName("back")[0].click();
     document.getElementsByClassName("back")[1].click();
@@ -462,9 +569,53 @@ GM_config.init({
     document.getElementsByClassName("back")[3].click();
     document.getElementsByClassName("back")[4].click();
   }, "keyup");
+    //issues answering stuff off "i"
+
   Mousetrap.bind([GM_config.get("issueskey1"), GM_config.get("issueskey2")], function (ev) {
-    window.open("https://www.nationstates.net/page=dilemmas", "_blank");
+    if (GM_config.get("newTab"))
+    {
+    var NT=true;
+    }
+      if (window.location.href.indexOf("page=dilemmas") > -1){
+        const matches = document.getElementsByClassName("dillistnpaper silentlink");
+        if (NT){
+          window.open(matches[0].getAttribute('href'),"_blank");
+            matches[0].remove()
+        }
+          else
+          {
+          window.open(matches[0].getAttribute('href'),"_self");
+
+          }
+    }
+    else if (window.location.href.indexOf("page=show_dilemma") > -1) {
+        const matches = document.getElementsByClassName("button big icon approve");
+        matches[0].click();
+    }
+    else if (window.location.href.indexOf("page=enact_dilemma") > -1){
+        const matches2 = document.getElementsByClassName("button lootboxbutton");
+       if (matches2.length > 0)
+       {
+           matches2[0].click();
+       }
+       else if(NT)
+       {window.close();}
+       else
+       {
+           window.open("https://www.nationstates.net/page=dilemmas", "_self");}
+
+   }
+      else
+    {
+      if (NT){
+      window.open("https://www.nationstates.net/page=dilemmas", "_blank");
+      }
+        else {
+        window.open("https://www.nationstates.net/page=dilemmas", "_self");}
+      }
+
   }, "keyup");
+
   Mousetrap.bind([GM_config.get("valuekey1"), GM_config.get("valuekey2")], function (ev) {
     window.open("https://www.nationstates.net/page=deck/value_deck=1", "_blank");
   }, "keyup");
