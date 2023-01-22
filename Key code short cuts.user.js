@@ -725,9 +725,10 @@ GM_config.init({
   }, "keyup");
          Mousetrap.bind("right", function (ev) {
          if (window.location.href.includes("start=")) {
-					  document.getElementsByClassName("pagpage-arrow")[1].click();
-				 } else {
-					  document.getElementsByClassName("pagpage-arrow")[0].click();
+		document.getElementsByClassName("pagpage-arrow")[1].click();
+	} else {
+		document.getElementsByClassName("pagpage-arrow")[0].click();
+	}
   }, "keyup");
 
 
