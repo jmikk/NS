@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Hotkeys for cards
-// @version      1.13.3
+// @version      1.13.4
 // @description  mousetrap keybinds for card page
 // @author       OG base code by: dithpri Moded far beyound what it once was by 9003
 // @noframes
@@ -492,7 +492,8 @@ GM_config.init({
   );
 
   Mousetrap.bind([GM_config.get("openpackkey1"), GM_config.get("openpackkey2")], function (ev) {
-    document.getElementsByClassName("button lootboxbutton")[0].click();
+    window.open("www.nationstates.net/page=deck?open_loot_box=1","_self");
+
   }, "keyup");
 
   //Mousetrap.bind(['ctrl+o'], async function(ev){
@@ -724,11 +725,7 @@ GM_config.init({
          document.getElementsByClassName("pagpage-arrow")[0].click()
   }, "keyup");
          Mousetrap.bind("right", function (ev) {
-         if (window.location.href.includes("start=")) {
-		document.getElementsByClassName("pagpage-arrow")[1].click();
-	} else {
-		document.getElementsByClassName("pagpage-arrow")[0].click();
-	}
+         document.getElementsByClassName("pagpage-arrow")[1].click()
   }, "keyup");
 
 
