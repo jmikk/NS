@@ -492,7 +492,7 @@ GM_config.init({
   );
 
   Mousetrap.bind([GM_config.get("openpackkey1"), GM_config.get("openpackkey2")], function (ev) {
-    window.open("www.nationstates.net/page=deck?open_loot_box=1","_self");
+    window.open("https://www.nationstates.net/page=deck?open_loot_box=1","_self");
 
   }, "keyup");
 
