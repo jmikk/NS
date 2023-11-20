@@ -10,7 +10,11 @@
 
 (function() {
     'use strict';
-    if (document.body.dataset.nname == '9003') {
+
+    var bodyElement = document.getElementById('loggedin');
+    var dataNnameValue = bodyElement.getAttribute('data-nname');
+
+    if (dataNnameValue == 'yahoo_mail') {
         document
             .querySelectorAll('button[name="move_region"]')
             .forEach(function (el, idx) {
