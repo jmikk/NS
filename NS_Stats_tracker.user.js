@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         NationStates Playtime & Login Telemetry Tracker
+// @name         NationStates Advanced Telemetry Suite
 // @namespace    http://tampermonkey.net/
-// @version      6.1
-// @description  Restores classic styling, injects DBID into registry, and counts total native site logins via form tracking.
-// @author       9005 + Genmini AI
+// @version      7.1
+// @description  Tracks playtime, clicks, single enter keystrokes, and trading card pack openings across NationStates.
+// @author       Your Name
 // @match        https://www.nationstates.net/*
 // @grant        none
 // ==/UserScript==
@@ -32,6 +32,7 @@
     let foundedTimestamp = parseInt(getStored('ns_founded_time', '0'), 10);
     let dbid = getStored('ns_dbid', '');
 
+    // Initialization prompt only on main site
     if (!mainNation && window.location.pathname !== '/page=blank/stats') {
         mainNation = prompt("Please enter your main nation name to initialize statistical playtime estimation:");
         if (mainNation) {
@@ -71,6 +72,12 @@
         .catch(err => console.error("Error fetching NationStates API data:", err));
     }
 
+    // --- PACK OPENING URL DETECTION ---
+    if (window.location.search.includes('open_loot_box=1')) {
+        const openedPacks = parseInt(getStored('ns_packs_opened', '0'), 10);
+        setStored('ns_packs_opened', openedPacks + 1);
+    }
+
     // ==========================================
     // 2. NAV TAB INJECTION
     // ==========================================
@@ -98,10 +105,9 @@
     // 3. STATISTICAL CALCULATIONS ENGINE
     // ==========================================
     function calculateAdvancedPlaytime() {
-        const dailyLog = getDailyLog();
-        const dailyValues = Object.values(dailyLog);
+        const nsLog = getDailyLog();
+        const dailyValues = Object.values(nsLog);
         const n = dailyValues.length;
-
         const totalTrackedSeconds = dailyValues.reduce((a, b) => a + b, 0);
 
         if (!foundedTimestamp) {
@@ -175,23 +181,28 @@
 
         const stats = calculateAdvancedPlaytime();
         const totalClicks = parseInt(getStored('ns_total_clicks', '0'), 10);
-        const totalLogins = parseInt(getStored('ns_login_count', '0'), 10);
-        const clickFrequency = stats.rawTracked > 0 ? (totalClicks / (stats.rawTracked / 60)).toFixed(1) : '0';
+        const totalEnters = parseInt(getStored('ns_total_enters', '0'), 10);
+        const totalPacks = parseInt(getStored('ns_packs_opened', '0'), 10);
+
+        const combinedActions = totalClicks + totalEnters;
+        const actionFrequency = stats.rawTracked > 0 ? (combinedActions / (stats.rawTracked / 60)).toFixed(1) : '0';
 
         const elTotalTime = document.getElementById('live-total-playtime');
-        const elActionCount = document.getElementById('live-action-count');
+        const elClickCount = document.getElementById('live-click-count');
+        const elEnterCount = document.getElementById('live-enter-count');
         const elActionFreq = document.getElementById('live-action-frequency');
         const elDailyAvg = document.getElementById('live-daily-average');
         const elConfidence = document.getElementById('live-confidence');
         const elRawTracked = document.getElementById('live-raw-tracked');
-        const elLoginCount = document.getElementById('live-login-count');
+        const elPackCount = document.getElementById('live-pack-count');
 
         if (elTotalTime) elTotalTime.textContent = formatTime(stats.total);
-        if (elActionCount) elActionCount.textContent = `${totalClicks.toLocaleString()} Clicks`;
-        if (elActionFreq) elActionFreq.textContent = clickFrequency;
+        if (elClickCount) elClickCount.textContent = `${totalClicks.toLocaleString()} Clicks`;
+        if (elEnterCount) elEnterCount.textContent = `${totalEnters.toLocaleString()} Enters`;
+        if (elActionFreq) elActionFreq.textContent = actionFrequency;
         if (elDailyAvg) elDailyAvg.textContent = `${stats.dailyAvgMins} mins / day`;
         if (elRawTracked) elRawTracked.textContent = `${formatTime(stats.rawTracked)} across ${stats.daysRunning} days`;
-        if (elLoginCount) elLoginCount.textContent = `${totalLogins.toLocaleString()} Logins`;
+        if (elPackCount) elPackCount.textContent = `${totalPacks.toLocaleString()} Card Packs Opened`;
 
         if (elConfidence) {
             elConfidence.textContent = stats.confidence;
@@ -199,7 +210,7 @@
         }
     }
 
-    // Render Dashboard Structure
+    // Render Dashboard Structure (Dashboard Route Only)
     if (window.location.pathname === '/page=blank/stats' || window.location.search.includes('page=blank/stats')) {
         document.title = "NationStates | Playtime Analytics";
         const mainContent = document.getElementById('content') || document.body;
@@ -224,11 +235,19 @@
                     </div>
 
                     <div style="flex: 1; min-width: 220px; background: #f9f9f9; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px;">
-                        <span style="font-size: 0.9em; color: #666; font-weight: bold;">TOTAL INTERACTIONS:</span>
-                        <div id="live-action-count" style="font-size: 1.8em; font-weight: bold; margin-top: 5px; color: #2e7d32;">...</div>
-                        <span style="font-size: 0.8em; color: #777;">Frequency: <strong id="live-action-frequency">0</strong> clicks/min</span>
+                        <span style="font-size: 0.9em; color: #666; font-weight: bold;">MOUSE CLICK VOLUME:</span>
+                        <div id="live-click-count" style="font-size: 1.6em; font-weight: bold; margin-top: 8px; color: #2e7d32; font-family: monospace;">...</div>
+                        <span style="font-size: 0.8em; color: #777; display: block; margin-top: 4px;">Combined Rate: <strong id="live-action-frequency">0</strong> inputs/min</span>
                     </div>
 
+                    <div style="flex: 1; min-width: 220px; background: #f9f9f9; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px;">
+                        <span style="font-size: 0.9em; color: #666; font-weight: bold;">ENTER PRESS COUNTER:</span>
+                        <div id="live-enter-count" style="font-size: 1.6em; font-weight: bold; margin-top: 8px; color: #dd2c00; font-family: monospace;">...</div>
+                        <span style="font-size: 0.8em; color: #777; display: block; margin-top: 4px;"></span>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;">
                     <div style="flex: 1; min-width: 220px; background: #f9f9f9; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px;">
                         <span style="font-size: 0.9em; color: #666; font-weight: bold;">DAILY ESTIMATED AVERAGE:</span>
                         <div id="live-daily-average" style="font-size: 1.8em; font-weight: bold; margin-top: 5px; color: #f57c00;">...</div>
@@ -236,24 +255,24 @@
                     </div>
                 </div>
 
-                <h3 style="margin-top: 30px; border-bottom: 1px solid #ccc; padding-bottom: 3px; color:#444;">Metadata</h3>
+                <h3 style="margin-top: 30px; border-bottom: 1px solid #ccc; padding-bottom: 3px; color:#444;">Registry & Telemetry Metadata</h3>
                 <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.95em;">
-                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold; width: 40%;">Main Target Identity:</td><td style="padding: 8px; border-bottom: 1px solid #eee; text-transform: capitalize;">${mainNation.replace(/_/g, ' ')}</td></tr>
+                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold; width: 45%;">Main Target Identity:</td><td style="padding: 8px; border-bottom: 1px solid #eee; text-transform: capitalize;">${mainNation.replace(/_/g, ' ')}</td></tr>
                     <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">System Database Key (DBID):</td><td style="padding: 8px; border-bottom: 1px solid #eee; font-family: monospace; font-weight: bold; color: #24578a;">${dbid || 'Retrieving parameter...'}</td></tr>
                     <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Nation Creation Date:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${foundationDateStr}</td></tr>
                     <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Pre-Tracker Structural Age:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${statsInit.historicalDays} days</td></tr>
-                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Active Script Data:</td><td id="live-raw-tracked" style="padding: 8px; border-bottom: 1px solid #eee;">...</td></tr>
-                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Tracked System Logins:</td><td id="live-login-count" style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold; color: #b85c00;">0 Logins</td></tr>
+                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Active Script Telemetry Data:</td><td id="live-raw-tracked" style="padding: 8px; border-bottom: 1px solid #eee;">...</td></tr>
+                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Trading Card Lootboxes opened:</td><td id="live-pack-count" style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold; color: #7b1fa2;">0 Packs</td></tr>
                 </table>
 
                 <div style="margin-top: 30px; text-align: center;">
-                    <button id="reset-ns-stats" style="background: #a00; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">Purge Storage (deletes data)</button>
+                    <button id="reset-ns-stats" style="background: #a00; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">Purge Telemetry Storage Core</button>
                 </div>
             </div>
         `;
 
         document.getElementById('reset-ns-stats').addEventListener('click', () => {
-            if (confirm("Are you sure you want to completely clear all locally logged playtime metrics, click counters, login trackers, and settings?")) {
+            if (confirm("Are you sure you want to completely clear all locally logged playtime metrics, click counters, input trackers, and settings?")) {
                 localStorage.clear();
                 alert("Core cleared. Reloading page.");
                 window.location.reload();
@@ -273,7 +292,6 @@
         if (!document.hidden) {
             const todayKey = getTodayKey();
             const dailyLog = getDailyLog();
-
             dailyLog[todayKey] = (dailyLog[todayKey] || 0) + 1;
             saveDailyLog(dailyLog);
 
@@ -282,29 +300,40 @@
         }
     }, 1000);
 
-    // Global Clicks Event Core Hook
+    // Global Clicks Event Hook
     window.addEventListener('click', () => {
         const globalClicks = parseInt(getStored('ns_total_clicks', '0'), 10);
         setStored('ns_total_clicks', globalClicks + 1);
         updateLiveDashboard();
     });
 
-    // --- LOGIN FORM INTERCEPTION CORE ---
-    window.addEventListener('submit', (e) => {
-        // Intercepting native login payloads by scanning submitted inputs/buttons named 'submit' with the value 'login'
-        const targetForm = e.target;
-        if (targetForm) {
-            const submitElement = targetForm.querySelector('[name="submit"]');
-            if (submitElement && submitElement.value === 'Login') {
-                const currentLogins = parseInt(getStored('ns_login_count', '0'), 10);
-                setStored('ns_login_count', currentLogins + 1);
+    // Anti-Spam True Press State Handler
+    let isEnterDown = false;
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            if (!isEnterDown) {
+                isEnterDown = true; // Lock down hold triggers
+                const globalEnters = parseInt(getStored('ns_total_enters', '0'), 10);
+                setStored('ns_total_enters', globalEnters + 1);
+                updateLiveDashboard();
             }
         }
     });
 
-    // Storage Vector Synchronizer
+    window.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') {
+            isEnterDown = false; // Reset lock when key completely clears up stroke
+        }
+    });
+
+    // Storage Vector Cross-Domain Synchronizer
     window.addEventListener('storage', (e) => {
-        if (['ns_playtime_daily_log', 'ns_founded_time', 'ns_total_clicks', 'ns_dbid', 'ns_login_count'].includes(e.key)) {
+        const triggers = [
+            'ns_playtime_daily_log', 'ns_founded_time', 'ns_total_clicks',
+            'ns_total_enters', 'ns_dbid', 'ns_packs_opened'
+        ];
+        if (triggers.includes(e.key)) {
             updateLiveDashboard();
         }
     });
