@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         NationStates Advanced Telemetry Suite
+// @name         NationStates Advanced Metadata Suite
 // @namespace    http://tampermonkey.net/
-// @version      7.1
-// @description  Tracks playtime, clicks, single enter keystrokes, and trading card pack openings across NationStates.
+// @version      7.3
+// @description  Tracks playtime, clicks, enter keystrokes, and lootbox openings with premium dashboard visibility.
 // @author       Your Name
 // @match        https://www.nationstates.net/*
 // @grant        none
@@ -10,6 +10,19 @@
 
 (function() {
     'use strict';
+
+    // ==========================================
+    // 0. AUTO-PURGE CORE DATA ON FIRST RUN
+    // ==========================================
+    if (!localStorage.getItem('ns_v73_purged')) {
+        const legacyKeys = [
+            'ns_playtime_daily_log', 'ns_total_playtime', 'ns_total_clicks', 
+            'ns_total_enters', 'ns_packs_opened', 'ns_main_nation', 
+            'ns_founded_time', 'ns_dbid', 'ns_first_run_time'
+        ];
+        legacyKeys.forEach(key => localStorage.removeItem(key));
+        localStorage.setItem('ns_v73_purged', 'true');
+    }
 
     // ==========================================
     // 1. DATA STORAGE & INITIALIZATION ENGINE
@@ -54,7 +67,7 @@
             const xmlDoc = parser.parseFromString(str, "text/xml");
             const foundedNode = xmlDoc.getElementsByTagName("FOUNDEDTIME")[0];
             const dbidNode = xmlDoc.getElementsByTagName("DBID")[0];
-
+            
             let updated = false;
             if (foundedNode && foundedNode.textContent) {
                 setStored('ns_founded_time', parseInt(foundedNode.textContent, 10));
@@ -109,7 +122,7 @@
         const dailyValues = Object.values(nsLog);
         const n = dailyValues.length;
         const totalTrackedSeconds = dailyValues.reduce((a, b) => a + b, 0);
-
+        
         if (!foundedTimestamp) {
             return { total: totalTrackedSeconds, isEstimate: false, confidence: 'Gathering Data...', color: '#666', rawTracked: totalTrackedSeconds, daysRunning: n };
         }
@@ -162,6 +175,9 @@
         };
     }
 
+    // ==========================================
+    // 4. LIVE DASHBOARD DOM SYNC ENGINE
+    // ==========================================
     function formatTime(seconds) {
         const hrs = Math.floor(seconds / 3600);
         const mins = Math.floor((seconds % 3600) / 60);
@@ -173,9 +189,6 @@
         return timeString || '0s';
     }
 
-    // ==========================================
-    // 4. LIVE DASHBOARD DOM SYNC ENGINE
-    // ==========================================
     function updateLiveDashboard() {
         if (!window.location.pathname.includes('/page=blank/stats')) return;
 
@@ -183,27 +196,27 @@
         const totalClicks = parseInt(getStored('ns_total_clicks', '0'), 10);
         const totalEnters = parseInt(getStored('ns_total_enters', '0'), 10);
         const totalPacks = parseInt(getStored('ns_packs_opened', '0'), 10);
-
+        
         const combinedActions = totalClicks + totalEnters;
         const actionFrequency = stats.rawTracked > 0 ? (combinedActions / (stats.rawTracked / 60)).toFixed(1) : '0';
 
         const elTotalTime = document.getElementById('live-total-playtime');
         const elClickCount = document.getElementById('live-click-count');
         const elEnterCount = document.getElementById('live-enter-count');
+        const elPackCount = document.getElementById('live-pack-count');
         const elActionFreq = document.getElementById('live-action-frequency');
         const elDailyAvg = document.getElementById('live-daily-average');
         const elConfidence = document.getElementById('live-confidence');
         const elRawTracked = document.getElementById('live-raw-tracked');
-        const elPackCount = document.getElementById('live-pack-count');
 
         if (elTotalTime) elTotalTime.textContent = formatTime(stats.total);
         if (elClickCount) elClickCount.textContent = `${totalClicks.toLocaleString()} Clicks`;
         if (elEnterCount) elEnterCount.textContent = `${totalEnters.toLocaleString()} Enters`;
+        if (elPackCount) elPackCount.textContent = `${totalPacks.toLocaleString()} Packs`;
         if (elActionFreq) elActionFreq.textContent = actionFrequency;
         if (elDailyAvg) elDailyAvg.textContent = `${stats.dailyAvgMins} mins / day`;
         if (elRawTracked) elRawTracked.textContent = `${formatTime(stats.rawTracked)} across ${stats.daysRunning} days`;
-        if (elPackCount) elPackCount.textContent = `${totalPacks.toLocaleString()} Card Packs Opened`;
-
+        
         if (elConfidence) {
             elConfidence.textContent = stats.confidence;
             elConfidence.style.color = stats.color;
@@ -214,7 +227,7 @@
     if (window.location.pathname === '/page=blank/stats' || window.location.search.includes('page=blank/stats')) {
         document.title = "NationStates | Playtime Analytics";
         const mainContent = document.getElementById('content') || document.body;
-
+        
         let foundationDateStr = "Loading database parameters...";
         if (foundedTimestamp) {
             foundationDateStr = new Date(foundedTimestamp * 1000).toLocaleDateString(undefined, {
@@ -225,29 +238,36 @@
         const statsInit = calculateAdvancedPlaytime();
 
         mainContent.innerHTML = `
-            <div style="max-width: 800px; margin: 20px auto; padding: 20px; background: #fff; border: 1px solid #ddd; border-radius: 4px; font-family: sans-serif; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            <div style="max-width: 900px; margin: 20px auto; padding: 20px; background: #fff; border: 1px solid #ddd; border-radius: 4px; font-family: sans-serif; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
                 <h1 style="border-bottom: 1px solid #aaa; padding-bottom: 5px; margin-top: 0; color: #333;">NationStates Playtime Dashboard</h1>
-
-                <div style="display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 220px; background: #f9f9f9; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px;">
-                        <span style="font-size: 0.9em; color: #666; font-weight: bold;">TOTAL ESTIMATED PLAYTIME:</span>
-                        <div id="live-total-playtime" style="font-size: 1.8em; font-weight: bold; margin-top: 5px; color: #24578a;">...</div>
+                
+                <!-- PRIMARY METRICS GRID -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+                    <div style="background: #f9f9f9; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px;">
+                        <span style="font-size: 0.85em; color: #666; font-weight: bold;">TOTAL PLAYTIME:</span>
+                        <div id="live-total-playtime" style="font-size: 1.6em; font-weight: bold; margin-top: 5px; color: #24578a;">...</div>
                     </div>
 
-                    <div style="flex: 1; min-width: 220px; background: #f9f9f9; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px;">
-                        <span style="font-size: 0.9em; color: #666; font-weight: bold;">MOUSE CLICK VOLUME:</span>
-                        <div id="live-click-count" style="font-size: 1.6em; font-weight: bold; margin-top: 8px; color: #2e7d32; font-family: monospace;">...</div>
-                        <span style="font-size: 0.8em; color: #777; display: block; margin-top: 4px;">Combined Rate: <strong id="live-action-frequency">0</strong> inputs/min</span>
+                    <div style="background: #f4e8fa; padding: 15px; border: 1px solid #dcd0e3; border-radius: 4px;">
+                        <span style="font-size: 0.85em; color: #6a1b9a; font-weight: bold;">CARD PACKS OPENED:</span>
+                        <div id="live-pack-count" style="font-size: 1.8em; font-weight: bold; margin-top: 5px; color: #4a148c; font-family: monospace;">...</div>
                     </div>
 
-                    <div style="flex: 1; min-width: 220px; background: #f9f9f9; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px;">
-                        <span style="font-size: 0.9em; color: #666; font-weight: bold;">ENTER PRESS COUNTER:</span>
-                        <div id="live-enter-count" style="font-size: 1.6em; font-weight: bold; margin-top: 8px; color: #dd2c00; font-family: monospace;">...</div>
-                        <span style="font-size: 0.8em; color: #777; display: block; margin-top: 4px;"></span>
+                    <div style="background: #f9f9f9; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px;">
+                        <span style="font-size: 0.85em; color: #666; font-weight: bold;">MOUSE CLICK VOLUME:</span>
+                        <div id="live-click-count" style="font-size: 1.5em; font-weight: bold; margin-top: 8px; color: #2e7d32; font-family: monospace;">...</div>
+                        <span style="font-size: 0.75em; color: #777; display: block; margin-top: 4px;">Rate: <strong id="live-action-frequency">0</strong> inputs/min</span>
+                    </div>
+
+                    <div style="background: #f9f9f9; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px;">
+                        <span style="font-size: 0.85em; color: #666; font-weight: bold;">ENTER KEY PRESSES:</span>
+                        <div id="live-enter-count" style="font-size: 1.5em; font-weight: bold; margin-top: 8px; color: #dd2c00; font-family: monospace;">...</div>
+                        <span style="font-size: 0.75em; color: #777; display: block; margin-top: 4px;">True single strokes</span>
                     </div>
                 </div>
 
-                <div style="display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;">
+                <!-- TREND LINES ROW -->
+                <div style="display: flex; gap: 20px; margin-top: 15px; flex-wrap: wrap;">
                     <div style="flex: 1; min-width: 220px; background: #f9f9f9; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px;">
                         <span style="font-size: 0.9em; color: #666; font-weight: bold;">DAILY ESTIMATED AVERAGE:</span>
                         <div id="live-daily-average" style="font-size: 1.8em; font-weight: bold; margin-top: 5px; color: #f57c00;">...</div>
@@ -255,24 +275,23 @@
                     </div>
                 </div>
 
-                <h3 style="margin-top: 30px; border-bottom: 1px solid #ccc; padding-bottom: 3px; color:#444;">Registry & Telemetry Metadata</h3>
+                <h3 style="margin-top: 30px; border-bottom: 1px solid #ccc; padding-bottom: 3px; color:#444;">Registry & Metadata Parameters</h3>
                 <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.95em;">
                     <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold; width: 45%;">Main Target Identity:</td><td style="padding: 8px; border-bottom: 1px solid #eee; text-transform: capitalize;">${mainNation.replace(/_/g, ' ')}</td></tr>
                     <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">System Database Key (DBID):</td><td style="padding: 8px; border-bottom: 1px solid #eee; font-family: monospace; font-weight: bold; color: #24578a;">${dbid || 'Retrieving parameter...'}</td></tr>
                     <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Nation Creation Date:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${foundationDateStr}</td></tr>
                     <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Pre-Tracker Structural Age:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${statsInit.historicalDays} days</td></tr>
-                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Active Script Telemetry Data:</td><td id="live-raw-tracked" style="padding: 8px; border-bottom: 1px solid #eee;">...</td></tr>
-                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Trading Card Lootboxes opened:</td><td id="live-pack-count" style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold; color: #7b1fa2;">0 Packs</td></tr>
+                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Active Script Core Metadata:</td><td id="live-raw-tracked" style="padding: 8px; border-bottom: 1px solid #eee;">...</td></tr>
                 </table>
-
+                
                 <div style="margin-top: 30px; text-align: center;">
-                    <button id="reset-ns-stats" style="background: #a00; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">Purge Telemetry Storage Core</button>
+                    <button id="reset-ns-stats" style="background: #a00; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">Purge Data Storage Core</button>
                 </div>
             </div>
         `;
 
         document.getElementById('reset-ns-stats').addEventListener('click', () => {
-            if (confirm("Are you sure you want to completely clear all locally logged playtime metrics, click counters, input trackers, and settings?")) {
+            if (confirm("Are you sure you want to completely clear all locally logged metrics, counters, and settings?")) {
                 localStorage.clear();
                 alert("Core cleared. Reloading page.");
                 window.location.reload();
@@ -313,7 +332,7 @@
     window.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             if (!isEnterDown) {
-                isEnterDown = true; // Lock down hold triggers
+                isEnterDown = true; 
                 const globalEnters = parseInt(getStored('ns_total_enters', '0'), 10);
                 setStored('ns_total_enters', globalEnters + 1);
                 updateLiveDashboard();
@@ -323,14 +342,14 @@
 
     window.addEventListener('keyup', (e) => {
         if (e.key === 'Enter') {
-            isEnterDown = false; // Reset lock when key completely clears up stroke
+            isEnterDown = false; 
         }
     });
 
     // Storage Vector Cross-Domain Synchronizer
     window.addEventListener('storage', (e) => {
         const triggers = [
-            'ns_playtime_daily_log', 'ns_founded_time', 'ns_total_clicks',
+            'ns_playtime_daily_log', 'ns_founded_time', 'ns_total_clicks', 
             'ns_total_enters', 'ns_dbid', 'ns_packs_opened'
         ];
         if (triggers.includes(e.key)) {
