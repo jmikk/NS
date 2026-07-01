@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         NationStates Advanced Metadata Suite
 // @namespace    http://tampermonkey.net/
-// @version      7.3
+// @version      7.4
 // @description  Tracks playtime, clicks, enter keystrokes, and lootbox openings with premium dashboard visibility.
 // @author       Your Name
 // @match        https://www.nationstates.net/*
@@ -248,9 +248,10 @@
                         <div id="live-total-playtime" style="font-size: 1.6em; font-weight: bold; margin-top: 5px; color: #24578a;">...</div>
                     </div>
 
-                    <div style="background: #f4e8fa; padding: 15px; border: 1px solid #dcd0e3; border-radius: 4px;">
-                        <span style="font-size: 0.85em; color: #6a1b9a; font-weight: bold;">CARD PACKS OPENED:</span>
-                        <div id="live-pack-count" style="font-size: 1.8em; font-weight: bold; margin-top: 5px; color: #4a148c; font-family: monospace;">...</div>
+                    <div style="background: #f9f9f9; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px;">
+                        <span style="font-size: 0.85em; color: #666; font-weight: bold;">CARD PACKS OPENED:</span>
+                        <div id="live-pack-count" style="font-size: 1.5em; font-weight: bold; margin-top: 8px; color: #4a148c; font-family: monospace;">...</div>
+                        <span style="font-size: 0.75em; color: #777; display: block; margin-top: 4px;">Lootbox instances</span>
                     </div>
 
                     <div style="background: #f9f9f9; padding: 15px; border: 1px solid #e1e1e1; border-radius: 4px;">
