@@ -236,18 +236,18 @@
                     </div>
                 </div>
 
-                <h3 style="margin-top: 30px; border-bottom: 1px solid #ccc; padding-bottom: 3px; color:#444;">Registry & Telemetry Metadata</h3>
+                <h3 style="margin-top: 30px; border-bottom: 1px solid #ccc; padding-bottom: 3px; color:#444;">Metadata</h3>
                 <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.95em;">
                     <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold; width: 40%;">Main Target Identity:</td><td style="padding: 8px; border-bottom: 1px solid #eee; text-transform: capitalize;">${mainNation.replace(/_/g, ' ')}</td></tr>
                     <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">System Database Key (DBID):</td><td style="padding: 8px; border-bottom: 1px solid #eee; font-family: monospace; font-weight: bold; color: #24578a;">${dbid || 'Retrieving parameter...'}</td></tr>
                     <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Nation Creation Date:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${foundationDateStr}</td></tr>
                     <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Pre-Tracker Structural Age:</td><td style="padding: 8px; border-bottom: 1px solid #eee;">${statsInit.historicalDays} days</td></tr>
-                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Active Script Telemetry Data:</td><td id="live-raw-tracked" style="padding: 8px; border-bottom: 1px solid #eee;">...</td></tr>
-                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Tracked System Logins:</td><td id="live-login-count" style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold; color: #b85c00;">0 Authentications</td></tr>
+                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Active Script Data:</td><td id="live-raw-tracked" style="padding: 8px; border-bottom: 1px solid #eee;">...</td></tr>
+                    <tr><td style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold;">Tracked System Logins:</td><td id="live-login-count" style="padding: 8px; border-bottom: 1px solid #eee; font-weight: bold; color: #b85c00;">0 Logins</td></tr>
                 </table>
 
                 <div style="margin-top: 30px; text-align: center;">
-                    <button id="reset-ns-stats" style="background: #a00; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">Purge Telemetry Storage Core</button>
+                    <button id="reset-ns-stats" style="background: #a00; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">Purge Storage (deletes data)</button>
                 </div>
             </div>
         `;
